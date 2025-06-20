@@ -1,8 +1,28 @@
 use crate::sections::*;
+use crate::data::*;
 
-struct Page {
-    slug: String,
+struct PageData {
     title: String,
-    sections: Vec<Section>,  // Which sections this page needs
-    // page-specific data
+    slug: String,
+    metadescription: Option<String>,
+    content: Option<String>,
+}
+
+
+pub fn create_pages(data: &SiteData) {
+    
+    let homepage = create_homepage(&data);
+    
+    
+}
+
+
+pub fn create_homepage(site_data: &SiteData) -> PageData {
+    
+    PageData {
+        
+        
+        
+    }
+    
 }

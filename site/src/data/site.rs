@@ -1,9 +1,10 @@
 pub struct SiteData {
-    // ... other fields
-    //google_reviews: Vec<GoogleReview>,
+    title: String,
 }
 
 
 pub fn create_site_data() -> SiteData {
-    SiteData {}   
+    SiteData {
+        title: String::from("Hawkwood Corporation"),
+    }   
 }

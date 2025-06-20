@@ -5,7 +5,7 @@ pub struct NavItem {
 
 pub fn create_nav_items() -> Vec<NavItem> {
     vec![
-        NavItem { name: "Treatments".to_string(), url: "/treatments/".to_string() },
+        NavItem { name: "Operations".to_string(), url: "/operations/".to_string() },
         // ...
     ]
 }
