@@ -33,7 +33,7 @@ pub fn create_homepage(site_data: &SiteData) -> PageData {
         metadescription: metadescription.clone(),
     };
     
-    let head = create_head(&head_data);
+    
 
     let content = format!(
         r#"
@@ -52,6 +52,8 @@ pub fn create_homepage(site_data: &SiteData) -> PageData {
         metadescription: Some(metadescription),
         content: Some(content),
     };
+    
+    let head = create_head(&page_data);
     
     
     page
