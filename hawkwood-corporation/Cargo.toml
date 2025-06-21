@@ -1,0 +1,7 @@
+[package]
+name = "citadel"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+slugify = "0.1.0"
