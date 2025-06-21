@@ -1,5 +1,3 @@
-use crate::data::*;
+pub mod head;
 
-pub enum Section {
-    
-}
+use head::*;

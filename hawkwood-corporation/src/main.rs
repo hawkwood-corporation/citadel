@@ -1,20 +1,25 @@
-mod data;
-mod sections;
-mod pages;
-
 use std::fs;
+
+mod systems;
+mod pages;
+mod sections;
+pub mod citadel;
+mod site;
+
+
+use citadel::*;
+
 
 fn main() {
     
-    let site_data = data::create_site_data();
+    let mut site = Site::new();
     
-    let pages = pages::create_pages(&site_data);
+    site.create_pages();
     
     let _ = fs::create_dir_all("../public");
     let _ = fs::write("../public/index.html", "test");
     
     println!("Site generated!");
-   
     
 }
 

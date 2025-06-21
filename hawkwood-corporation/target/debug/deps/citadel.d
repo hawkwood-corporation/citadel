@@ -1,11 +1,15 @@
-N:\App Dev\citadel\hawkwood-corporation\target\debug\deps\citadel.d: src\main.rs src\data.rs src\data\site.rs src\data\nav.rs src\data\head.rs src\sections.rs src\pages.rs
+N:\App Dev\citadel\hawkwood-corporation\target\debug\deps\citadel.d: src\main.rs src\systems.rs src\systems\nav_system.rs src\systems\pages_system.rs src\systems\sections_system.rs src\pages.rs src\pages\homepage.rs src\sections.rs src\sections\head.rs src\citadel.rs src\site.rs
 
-N:\App Dev\citadel\hawkwood-corporation\target\debug\deps\citadel.exe: src\main.rs src\data.rs src\data\site.rs src\data\nav.rs src\data\head.rs src\sections.rs src\pages.rs
+N:\App Dev\citadel\hawkwood-corporation\target\debug\deps\citadel.exe: src\main.rs src\systems.rs src\systems\nav_system.rs src\systems\pages_system.rs src\systems\sections_system.rs src\pages.rs src\pages\homepage.rs src\sections.rs src\sections\head.rs src\citadel.rs src\site.rs
 
 src\main.rs:
-src\data.rs:
-src\data\site.rs:
-src\data\nav.rs:
-src\data\head.rs:
-src\sections.rs:
+src\systems.rs:
+src\systems\nav_system.rs:
+src\systems\pages_system.rs:
+src\systems\sections_system.rs:
 src\pages.rs:
+src\pages\homepage.rs:
+src\sections.rs:
+src\sections\head.rs:
+src\citadel.rs:
+src\site.rs:
