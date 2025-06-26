@@ -2,10 +2,10 @@ use crate::citadel::*;
 
 impl Site {
     
-    pub fn construct_head(&self, data: &PageData) -> String {
+    pub fn construct_head(&self, data: &mut PageData) {
         
         
-        format!(
+        data.content = Some(format!(
             r#"<head>
                 <title>{}</title>
                 <meta name="description" content="{}">
@@ -21,7 +21,8 @@ impl Site {
             </head>"#,
             data.title,
             data.metadescription.as_ref().unwrap_or(&String::new())
-        ).to_owned()
+        ).to_owned());
+        
     }
 
 }

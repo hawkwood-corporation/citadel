@@ -5,7 +5,10 @@ pub struct PageData {
     pub slug: Option<String>,
     pub metadescription: Option<String>,
     pub content: Option<String>,
+    pub image: Option<String>,
 }
+
+// definitely change to flat
 
 pub enum Page {
     Homepage { data: PageData },
@@ -22,11 +25,22 @@ impl Site {
         }
     }
 
-    pub fn create_pages(&mut self) -> Vec<PageData> {
+    pub fn create_pages(&mut self) {
         let mut pages = Vec::new();
-
+        
+        pages.push(self.construct(
+            Page::Homepage {
+                data: PageData {
+                    title: "Homepage".to_owned(),
+                    slug: None,
+                    metadescription: None,
+                    content: None,
+                    image: None,
+                }
+            }
+        ));
     
 
-        pages
+        self.pages = pages;
     }
 }
