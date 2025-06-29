@@ -1,3 +1,5 @@
+#![allow(unused_imports)]
+#[macro_use] extern crate slugify;
 use std::fs;
 
 mod systems;
@@ -5,6 +7,7 @@ mod page_types;
 mod sections;
 pub mod citadel;
 mod site;
+
 
 
 use citadel::*;
@@ -16,10 +19,9 @@ fn main() {
     
     site.create_pages();
     
-    let _ = fs::create_dir_all("../public");
-    let _ = fs::write("../public/index.html", "test");
+    site.write_files();
     
-    println!("Site generated!");
+  
     
 }
 

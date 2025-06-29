@@ -1,5 +1,12 @@
+#[allow(unused_imports)]
 use crate::citadel::*;
 
-pub enum Section {
-    Head { content: String },
+pub struct Section {
+    pub content: String
+}
+
+
+/// Static, reusable sections
+pub struct Sections {
+    pub header: String,
 }
