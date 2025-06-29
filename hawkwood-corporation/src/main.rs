@@ -1,7 +1,7 @@
 use std::fs;
 
 mod systems;
-mod pages;
+mod page_types;
 mod sections;
 pub mod citadel;
 mod site;

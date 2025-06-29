@@ -11,36 +11,39 @@ pub struct PageData {
 // definitely change to flat
 
 pub enum Page {
-    Homepage { data: PageData },
+    Homepage { page: PageData },
     //BlogPost { data: PageData },
     //ProductPage { data: PageData },
 }
 
 impl Site {
-    pub fn construct(&self, page_type: Page) -> PageData {
+    pub fn construct(&self, page_type: &mut Page, pages: &mut Vec<Page>) {
         match page_type {
-            Page::Homepage { mut data } => self.construct_homepage( &mut data ),
+            Page::Homepage { page } => self.construct_homepage( page ),
             //Page::BlogPost { data } => self.construct_blog_post(),
             //Page::ProductPage { data } => self.construct_product_page(),
-        }
+        };
+        
     }
 
     pub fn create_pages(&mut self) {
+        
         let mut pages = Vec::new();
         
-        pages.push(self.construct(
-            Page::Homepage {
-                data: PageData {
-                    title: "Homepage".to_owned(),
-                    slug: None,
-                    metadescription: None,
-                    content: None,
-                    image: None,
-                }
+        let mut page = Page::Homepage {
+            
+            page: PageData {
+                title: "Homepage".to_owned(),
+                slug: None,
+                metadescription: None,
+                content: None,
+                image: None,
             }
-        ));
+            
+        };
+        self.construct(&mut page, &mut pages);
+        pages.push(page);
+        
     
-
-        self.pages = pages;
     }
 }

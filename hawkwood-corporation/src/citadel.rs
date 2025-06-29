@@ -1,1 +1,1 @@
-pub use crate::{pages::*, sections::*, site::*, systems::*};
+pub use crate::{page_types::*, sections::*, site::*, systems::*};
