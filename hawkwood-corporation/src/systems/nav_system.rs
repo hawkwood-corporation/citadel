@@ -1,4 +1,4 @@
-use crate::citadel::*;
+use crate::prelude::*;
 
 pub struct NavItem {
     pub name: String,

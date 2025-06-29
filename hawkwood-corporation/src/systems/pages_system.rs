@@ -1,4 +1,4 @@
-use crate::citadel::*;
+use crate::prelude::*;
 
 pub struct PageData {
     pub title: String,

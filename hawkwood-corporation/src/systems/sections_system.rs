@@ -1,5 +1,5 @@
 #[allow(unused_imports)]
-use crate::citadel::*;
+use crate::prelude::*;
 
 pub struct Section {
     pub content: String

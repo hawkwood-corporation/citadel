@@ -1,16 +1,8 @@
 #![allow(unused_imports)]
 #[macro_use] extern crate slugify;
-use std::fs;
 
-mod systems;
-mod page_types;
-mod sections;
-pub mod citadel;
-mod site;
+use citadel::prelude::*;
 
-
-
-use citadel::*;
 
 
 fn main() {
