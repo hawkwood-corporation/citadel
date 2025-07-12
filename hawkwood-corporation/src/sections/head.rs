@@ -6,11 +6,17 @@ impl Site {
     
     pub fn construct_head(&self, data: &mut PageData) -> String {
         
+        let title = &data.title;
+        let metadescription = data.metadescription.as_deref().unwrap_or("");
+        let css = self.construct_css_stylesheet();
         
         format!(
             r####"<head>
-                <title>{}</title>
-                <meta name="description" content="{}">
+                <title>{title}</title>
+                <meta name="description" content="{metadescription}">
+                <style>
+                {css}
+                </style>
                 <!-- Google Analytics -->
                 <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
                 <script>
@@ -20,9 +26,7 @@ impl Site {
                 gtag('config', 'GA_TRACKING_ID');
                 </script>
                 <!-- Page-specific tracking -->
-            </head>"####,
-            data.title,
-            data.metadescription.as_ref().unwrap_or(&String::new())
+            </head>"####
         ).to_owned()
         
     }
