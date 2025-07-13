@@ -5,17 +5,17 @@ use crate::prelude::*;
 
 impl Site {
     
-    pub fn construct_css_stylesheet(&self) -> String {
+    pub fn construct_css(&self) -> String {
         
-        let mut css = 
-            r####"
+        let css = 
+            "
             
             * {
                 margin: 0;
                 padding: 0;
                 box-sizing: border-box;
             }
-            
+
             /* 1rem = 1px Trick */
 
             /*html {
@@ -25,8 +25,8 @@ impl Site {
             body {
                 font-size: 16em;
             }*/
-            
-            
+
+
 
             body {
                 font-family: 'Georgia', 'Times New Roman', serif;
@@ -396,11 +396,10 @@ impl Site {
                 display: inline-block;
                 margin-bottom: 20px;
             }
+              
+            ".to_owned();
             
-            
-            "####;
-            
-            let css = self.convert_rem_to_tem(css);
+            //let css = self.convert_rem_to_tem(&css);
             
             css
     

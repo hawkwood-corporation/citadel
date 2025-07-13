@@ -9,12 +9,15 @@ impl Site {
 
         format!(
             r####"
+            
             <header>
                 <nav class="container">
                     <a href="#" class="logo">HAWKWOOD CORPORATION</a>
                     {nav}
                 </nav>
-            </header>"####
+            </header>
+            
+            "####
         )
     }
 
