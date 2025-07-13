@@ -4,6 +4,3 @@
 # Rust build artifacts
 target/
 Cargo.lock
-
-# Generated files
-public/
