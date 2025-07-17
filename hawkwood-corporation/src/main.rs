@@ -11,6 +11,8 @@ fn main() {
     
     site.create_pages();
     
+    site.decree_across_pages();
+    
     site.write_files();
     
   

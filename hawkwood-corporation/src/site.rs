@@ -1,10 +1,11 @@
 use crate::prelude::*;
-use std::{collections::HashMap, path::PathBuf};
+use std::{collections::HashMap, path::PathBuf/*, sync::Mutex*/};
 
 pub struct Site {
     pub title: String,
     pub pages: Vec<Page>,
     pub sections: HashMap<String, String>,
+    pub css: HashMap<String, String>,
     pub settings: Settings,
 }
 
@@ -14,6 +15,7 @@ impl Site {
             title: "Hawkwood Corporation".to_owned(),
             pages: Vec::new(),
             sections: HashMap::new(),
+            css: HashMap::new(),
             settings: Settings {
                 output_folder: PathBuf::from("public"),
             },

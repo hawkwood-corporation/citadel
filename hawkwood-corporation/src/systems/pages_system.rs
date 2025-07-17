@@ -17,7 +17,7 @@ pub enum Page {
 }
 
 impl Site {
-    pub fn construct(&self, page_type: &mut Page) {
+    pub fn construct(&mut self, page_type: &mut Page) {
         let page = match page_type {
             Page::Homepage { page } => { self.construct_homepage( page ); page },
             Page::BlogPost { page } => { self.construct_blog_post( page ); page },
@@ -28,8 +28,6 @@ impl Site {
         
     }
 
-/*************  ✨ Windsurf Command ⭐  *************/
-/*******  063b67c7-1103-4397-9a87-b1e6b86005c7  *******/
     pub fn create_pages(&mut self) {
         
         let mut pages = Vec::new();

@@ -5,7 +5,7 @@ use crate::prelude::*;
 
 impl Site {
     
-    pub fn construct_css(&self) -> String {
+    pub fn construct_single_css(&self) -> String {
         
         let css = 
             "

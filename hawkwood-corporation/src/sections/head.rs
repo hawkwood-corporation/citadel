@@ -4,20 +4,19 @@ use crate::prelude::*;
 
 impl Site {
     
-    pub fn construct_head(&self, data: &mut PageData) -> String {
+    pub fn construct_head(&mut self, data: &mut PageData) -> String {
         
         let title = &data.title;
         let metadescription = data.metadescription.as_deref().unwrap_or("");
-        let css = self.construct_css();
         
-        format!(
+        let content = format!(
             r####"
             
             <head>
                 <title>{title}</title>
                 <meta name="description" content="{metadescription}">
                 <style>
-                    {css}
+                    [CSS_POSITION]
                 </style>
                 <!-- Google Analytics -->
                 <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
@@ -40,7 +39,28 @@ impl Site {
             
             "####
             
-        ).to_owned()
+        ).to_owned();
+        
+        
+        self.declare_css("foundation", "
+        
+            
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        ");
+        
+        content
         
     }
     
