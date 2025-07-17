@@ -7,7 +7,7 @@ pub fn clean_up_metadata(page: &mut PageData) {
         page.slug = Some(slugify!(&page.title))
     };
 }
-pub fn wrap_html_body(content: &mut String) {
+/*pub fn wrap_html_body(content: &mut String) {
     if let Some(head_end) = content.find("</head>") {
         let head_end_pos = head_end + "</head>".len();
         let (before_body, after_head) = content.split_at(head_end_pos);
@@ -39,7 +39,7 @@ pub fn wrap_html_body(content: &mut String) {
             
             "####, content);
     }
-}
+}*/
 
 
 

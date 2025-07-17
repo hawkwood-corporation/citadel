@@ -4,6 +4,7 @@ impl Site {
     
     pub fn declare_css(&mut self, key: &str, css: &str) {
         if !self.css.contains_key(key) {
+            println!("Declared CSS: {}", key);
             self.css.insert(key.to_string(), css.to_string());
         }
     }
@@ -29,25 +30,79 @@ impl Site {
             result.push(css.clone());
         }
         
-        result.join("\n")
+        let full_css = result.join("\n");
+        
+        let full_css = self.convert_tem_to_rem(full_css);
+        
+        full_css
     }
     
-    pub fn decree_css(&mut self, final_css: String) {
+    pub fn convert_tem_to_rem(&self, css: String) -> String {
+        let parts: Vec<&str> = css.split("tem").collect();
+        let mut result = String::new();
         
-        for page in &mut self.pages {
-            match page {
-                Page::Homepage { page } => {
-                    if let Some(content) = &mut page.content {
-                        *content = content.replace("[CSS_POSITION]", &final_css);
-                    }
-                },
-                Page::BlogPost { page } => {
-                    if let Some(content) = &mut page.content {
-                        *content = content.replace("[CSS_POSITION]", &final_css);
+        for (i, part) in parts.iter().enumerate() {
+            if i == 0 {
+                result.push_str(part);
+            } else {
+                // Get the previous part to find the number at its end
+                let prev_part = &parts[i - 1];
+                
+                // Find the number at the end of previous part
+                let mut num_start = prev_part.len();
+                for ch in prev_part.chars().rev() {
+                    if ch.is_ascii_digit() || ch == '.' {
+                        num_start -= ch.len_utf8();
+                    } else {
+                        break;
                     }
                 }
+                
+                if let Ok(pixels) = prev_part[num_start..].parse::<f32>() {
+                    // Remove the number from result and add converted value
+                    result.truncate(result.len() - (prev_part.len() - num_start));
+                    result.push_str(&format!("{}rem", pixels / 16.0));
+                }
+                
+                result.push_str(part);
             }
         }
+        
+        result
+    }
+    
+    pub fn convert_rem_to_tem(&self, css: String) -> String {
+        let parts: Vec<&str> = css.split("rem").collect();
+        let mut result = String::new();
+        
+        for (i, part) in parts.iter().enumerate() {
+            if i == 0 {
+                result.push_str(part);
+            } else {
+                // Get the previous part to find the number at its end
+                let prev_part = &parts[i - 1];
+                
+                // Find the number at the end of previous part
+                let mut num_start = prev_part.len();
+                for ch in prev_part.chars().rev() {
+                    if ch.is_ascii_digit() || ch == '.' {
+                        num_start -= ch.len_utf8();
+                    } else {
+                        break;
+                    }
+                }
+                
+                if let Ok(pixels) = prev_part[num_start..].parse::<f32>() {
+                    // Remove the number from result and add converted value
+                    result.truncate(result.len() - (prev_part.len() - num_start));
+                    result.push_str(&format!("{}tem", pixels * 16.0));
+                }
+                
+                result.push_str(part);
+            }
+        }
+        
+        result
     }
     
 }

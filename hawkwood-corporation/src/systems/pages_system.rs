@@ -8,12 +8,32 @@ pub struct PageData {
     pub image: Option<String>,
 }
 
-// definitely change to flat
-
 pub enum Page {
     Homepage { page: PageData },
     BlogPost { page: PageData },
     //ProductPage { data: PageData },
+}
+
+pub trait AsPageData {
+    fn as_page_data(&self) -> &PageData;
+    fn as_page_data_mut(&mut self) -> &mut PageData;
+}
+
+impl AsPageData for Page {
+    fn as_page_data(&self) -> &PageData {
+        match self {
+            Page::Homepage { page } => page,
+            Page::BlogPost { page, .. } => page,
+            // Page::ProductPage { page, .. } => page,
+        }
+    }
+    fn as_page_data_mut(&mut self) -> &mut PageData {
+        match self {
+            Page::Homepage { page } => page,
+            Page::BlogPost { page, .. } => page,
+            // Page::ProductPage { page, .. } => page,
+        }
+    }
 }
 
 impl Site {

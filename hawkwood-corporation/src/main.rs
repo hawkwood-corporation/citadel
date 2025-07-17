@@ -9,6 +9,8 @@ fn main() {
     
     let mut site = Site::new();
     
+    site.construct_sections();
+    
     site.create_pages();
     
     site.decree_across_pages();

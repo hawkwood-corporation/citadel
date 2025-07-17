@@ -3,10 +3,23 @@ use crate::prelude::*;
 #[allow(unused_variables)]
 
 impl Site {
-    
-    pub fn construct_homepage_css(&self) {
+
+    pub fn construct_homepage(&mut self, page: &mut PageData) {
         
-        let css = "/* Hero Section */
+        
+        
+        page.slug = Some("".to_owned());
+        
+        let title = &page.title;
+        page.metadescription = Some("Strategic revenue engineering for serious businesses. We deliver 10:1+ ROI through sophisticated Google Ads systems that perform under pressure.".to_owned());
+        
+        let head = self.construct_head(page);
+        let header = self.construct_header(page);
+        
+        
+        self.declare_css( "homepage", "
+        
+        /* Hero Section */
         .hero {
             padding: 120px 0 100px;
             text-align: center;
@@ -49,32 +62,16 @@ impl Site {
             background: #9A3B23;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(183, 71, 42, 0.4);
-        }".to_owned();
+        }
         
-    }
-    
-    pub fn construct_homepage(&mut self, page: &mut PageData) {
+        ");
         
-        
-        
-        page.slug = Some("".to_owned());
-        
-        
-        
-        
-        let title = &page.title;
-        page.metadescription = Some("Strategic revenue engineering for serious businesses. We deliver 10:1+ ROI through sophisticated Google Ads systems that perform under pressure.".to_owned());
-        
-        let head = self.construct_head(page);
-        let header = self.construct_header(page);
-        
-        
-        let mut content = format!(
+        let content = format!(
             r####";
 <!DOCTYPE html>
-    <html lang="en-US">
-        {head}
-        
+<html lang="en-US">
+    {head}
+    <body>
         {header}
 
         <section class="hero">
@@ -238,8 +235,6 @@ impl Site {
     </body>
 </html>
             "####).to_string();
-        
-        //wrap_html_body(&mut content);
     
         page.content = Some(content);  
         
