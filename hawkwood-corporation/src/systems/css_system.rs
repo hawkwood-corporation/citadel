@@ -62,6 +62,9 @@ impl Site {
                     // Remove the number from result and add converted value
                     result.truncate(result.len() - (prev_part.len() - num_start));
                     result.push_str(&format!("{}rem", pixels / 16.0));
+                } else {
+                    // No number found, put "tem" back where it was
+                    result.push_str("tem");
                 }
                 
                 result.push_str(part);
@@ -71,6 +74,7 @@ impl Site {
         result
     }
     
+    // True em system. 18tem = 18px but in rem
     pub fn convert_rem_to_tem(&self, css: String) -> String {
         let parts: Vec<&str> = css.split("rem").collect();
         let mut result = String::new();
@@ -96,6 +100,9 @@ impl Site {
                     // Remove the number from result and add converted value
                     result.truncate(result.len() - (prev_part.len() - num_start));
                     result.push_str(&format!("{}tem", pixels * 16.0));
+                } else {
+                    // No number found, put "rem" back where it was
+                    result.push_str("rem");
                 }
                 
                 result.push_str(part);
