@@ -14,9 +14,14 @@ mod systems {
     pub mod cleanup_system;
     pub mod css_system;
     pub mod decree_system;
+    pub mod assets_system;
 }
 
 mod page_types {
     pub mod homepage;
     pub mod blog_post;
+}
+
+mod parts {
+    pub mod nav_toggle;
 }

@@ -1,337 +1,400 @@
 <!DOCTYPE html>
 <html lang="en-US">
-    <head>
-        <title>Homepage</title>
-        <meta name="description" content="Strategic revenue engineering for serious businesses. We deliver 10:1+ ROI through sophisticated Google Ads systems that perform under pressure.">
-        <style>
-            /* ===== HAMBURGER MENU ===== */
-            /* Hide checkbox */
-            #nav-toggle-button {
-                display: none;
-            }
-            /* Hamburger button (hidden by default) */
-            #nav-label {
-                display: none;
-                cursor: pointer;
-                z-index: 2000;
-            }
-            /* Hamburger icon lines */
-            .nav-toggle-symbol {
-                position: relative;
-                width: 35px;
-                height: 3px;
-                background: #B7472A;
-                display: block;
-                transition: all 0.2s ease;
-            }
-            .nav-toggle-symbol::before,
-            .nav-toggle-symbol::after {
-                content: "";
-                position: absolute;
-                left: 0;
-                width: 35px;
-                height: 3px;
-                background: #B7472A;
-                transition: all 0.2s ease;
-            }
-            .nav-toggle-symbol::before {
-                top: -10px;
-            }
-            .nav-toggle-symbol::after {
-                top: 10px;
-            }
-            /* Transform to X when checked */
-            #nav-toggle-button:checked + #nav-label .nav-toggle-symbol {
-                background: transparent;
-            }
-            #nav-toggle-button:checked + #nav-label .nav-toggle-symbol::before {
-                top: 0;
-                transform: rotate(135deg);
-            }
-            #nav-toggle-button:checked + #nav-label .nav-toggle-symbol::after {
-                top: 0;
-                transform: rotate(-135deg);
-            }
-            /* ===== MOBILE STYLES ===== */
-            @media screen and (max-width: 1000px) {
-                /* Show hamburger on mobile */
-                #nav-label {
-                    display: block;
-                }
-                /* Hide desktop nav by default */
-                nav ul, nav ul ~ a {
-                    display: none;
-                }
-                /* Show nav when checkbox is checked */
-                #nav-toggle-button:checked ~ ul,
-                #nav-toggle-button:checked ~ .cta {
-                    display: block;
-                }
-                /* Full screen overlay when menu is open */
-                header:has(#nav-toggle-button:checked) {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100vw;
-                    height: 100vh;
-                    background: var(--background-color);
-                    z-index: 1000;
-                }
-                /* Lock body scroll when menu is open */
-                body:has(#nav-toggle-button:checked) {
-                    overflow: hidden;
-                }
-                /* Mobile menu styles */
-                nav ul {
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 2rem;
-                    font-size: 2rem;
-                    font-weight: 600;
-                    height: 100vh;
-                    padding: 0;
-                    margin: 0;
-                }
-                nav ul li {
+<head>
+    <title>Homepage</title>
+    <meta name="description" content="Strategic revenue engineering for serious businesses. We deliver 10:1+ ROI through sophisticated Google Ads systems that perform under pressure.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        /* ===== SOVEREIGN COLORS ===== */
+        :root {
+            --smoky-black: #272b2d;
+            --terracotta: #B7472A;
+            --sage: #87A96B;
+            --sovereign-white: #fefefe;
+            --old-money-grey: #6B7280;
+        }
+        /* ===== TYPOGRAPHY ===== */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        form,
+        input,
+        button,
+        a,
+        ul,
+        ol,
+        li {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-weight: 400;
+        }
+        /* ===== HEADER ===== */
+        header {
+            nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 40px;
+                padding: 15px 60px;
+                max-width: 1200px;
+                margin: 0 auto;
+                ul {
+                    display: flex;
                     list-style: none;
-                }
-                nav ul li a {
-                    display: block;
-                    padding: 0.6em 1.2em;
-                    border-radius: 100px;
-                    transition: all 0.2s ease;
-                }
-                /* Style the CTA button in mobile menu */
-                nav .cta {
-                    margin-top: 1rem;
-                    padding: 1rem 2rem;
-                    border: 2px solid #B7472A;
-                    border-radius: 50px;
-                    text-align: center;
-                }
-                /* Smaller text on very small screens */
-                @media screen and (max-width: 400px) {
-                    nav ul {
-                        font-size: 1.5rem;
+                    gap: 30px;
+                    margin: 0;
+                    padding: 0;
+                    li {
+                        list-style: none;
+                        a {
+                            padding: 14px 10px;
+                        }
                     }
                 }
+                a {
+                    text-decoration: none;
+                    color: var(--smoky-black);
+                }
             }
-            /* Hero Section */
-            .hero {
-                padding: 120px 0 100px;
-                text-align: center;
-                background: linear-gradient(135deg, #fefefe 0%, #f9f8f6 100%);
+        }
+        /* ===== NAV TOGGLE BUTTON ===== */
+        /* Hide checkbox */
+        #nav-toggle-button {
+            display: none;
+        }
+        /* Nav toggle button (hidden by default) */
+        #nav-label {
+            display: none;
+            cursor: pointer;
+            z-index: 2000;
+        }
+        /* Nav toggle symbol lines */
+        .nav-toggle-symbol {
+            position: relative;
+            width: 35px;
+            height: 3px;
+            background: #B7472A;
+            display: block;
+            transition: all 0.2s ease;
+        }
+        .nav-toggle-symbol::before,
+        .nav-toggle-symbol::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: 35px;
+            height: 3px;
+            background: #B7472A;
+            transition: all 0.2s ease;
+        }
+        .nav-toggle-symbol::before {
+            top: -10px;
+        }
+        .nav-toggle-symbol::after {
+            top: 10px;
+        }
+        /* Transform to X when checked */
+        #nav-toggle-button:checked + #nav-label .nav-toggle-symbol {
+            background: transparent;
+        }
+        #nav-toggle-button:checked + #nav-label .nav-toggle-symbol::before {
+            top: 0;
+            transform: rotate(135deg);
+        }
+        #nav-toggle-button:checked + #nav-label .nav-toggle-symbol::after {
+            top: 0;
+            transform: rotate(-135deg);
+        }
+        /* ===== NAV TOGGLE BUTTON MOBILE ===== */
+        @media screen and (max-width: 600px) {
+            /* Show nav toggle on mobile */
+            #nav-label {
+                display: block;
             }
-            .hero h1 {
-                font-size: 3.8rem;
-                font-weight: 700;
-                margin-bottom: 25px;
-                color: #B7472A;
-                letter-spacing: -1px;
-                line-height: 1.2;
+            /* Hide desktop nav by default */
+            nav ul, nav ul ~ a {
+                display: none;
             }
-            .hero .subtitle {
-                font-size: 1.4rem;
-                color: #6B7280;
-                margin-bottom: 50px;
-                font-weight: 400;
-                max-width: 700px;
-                margin-left: auto;
-                margin-right: auto;
+            /* Show nav when checkbox is checked */
+            #nav-toggle-button:checked ~ ul,
+            #nav-toggle-button:checked ~ .cta {
+                display: block;
             }
-            .cta-button {
-                background: #B7472A;
-                color: #ffffff;
-                padding: 20px 45px;
-                font-size: 18px;
+            /* Full screen overlay when menu is open */
+            header:has(#nav-toggle-button:checked) {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: var(--background-color);
+                z-index: 1000;
+            }
+            /* Lock body scroll when menu is open */
+            body:has(#nav-toggle-button:checked) {
+                overflow: hidden;
+            }
+            /* Mobile menu styles */
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2rem;
+                font-size: 2rem;
                 font-weight: 600;
-                text-decoration: none;
-                border-radius: 6px;
-                transition: all 0.3s;
-                display: inline-block;
-                box-shadow: 0 4px 12px rgba(183, 71, 42, 0.3);
+                height: 100vh;
+                padding: 0;
+                margin: 0;
             }
-            .cta-button:hover {
-                background: #9A3B23;
-                transform: translateY(-2px);
-                box-shadow: 0 6px 20px rgba(183, 71, 42, 0.4);
+            nav ul li {
+                list-style: none;
             }
-        </style>
-        <!-- Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'GA_TRACKING_ID');
-        </script>
-        <!-- Page-specific tracking -->
-        <!-- Quicklink Page Preloading -->
-        <script defer src="https://cdn.jsdelivr.net/npm/quicklink@3.0.1/dist/quicklink.umd.js"></script>
-        <script>
-            window.addEventListener('load', () => {
-            quicklink.listen();
-            });
-        </script>
-    </head>
-    <body class="homepage">
-        <header>
-            <nav aria-label="Main navigation">
-                <a href="/" class="nav-link current aria-current="page""><img src="hawkwood-corporation-logo.svg" class="logo" alt="Hawkwood Corporation Logo"></a>
-                <ul>
-                    <li><a href="/about" class="nav-link">About</a></li>
-                    <li><a href="/projects" class="nav-link">Projects</a></li>
-                    <li><a href="/intelligence" class="nav-link">Intelligence</a></li>
-                </ul>
-                <a href="/call-us" class="nav-link call-us-link">Call Us</a>
-                <input id="nav-toggle-button" type="checkbox">
-                <label id="nav-label" for="nav-toggle-button"><span class="nav-toggle-symbol"></span></label>
-            </nav>
-        </header>
-        <section class="hero">
-            <div class="container">
-                <h1>Strategic Revenue Engineering</h1>
-                <p class="subtitle">We deliver the 10:1+ ROI performance that serious businesses demand. Whether you're managing billions in assets or scaling a high-growth enterprise, we architect revenue systems that perform under pressure.</p>
-                <a href="#deployment" class="cta-button">Request Strategic Briefing</a>
-            </div>
-        </section>
-        <section class="section" id="operations">
-            <div class="container">
-                <div class="badge">Precision Operations</div>
-                <h2>Revenue Engineering</h2>
-                <p class="section-intro">We don't just run campaigns—we architect revenue systems. Every strategy is designed for sophisticated businesses with serious growth objectives and performance requirements.</p>
-                <div class="services-grid">
-                    <div class="service-card">
-                        <h3>Strategic Search Operations</h3>
-                        <p>Google Ads campaigns engineered for competitive markets and premium customer acquisition. We navigate complex landscapes to deliver measurable client growth at scale.</p>
-                    </div>
-                    <div class="service-card">
-                        <h3>Market Intelligence Systems</h3>
-                        <p>Comprehensive competitive analysis, target market profiling, and performance attribution that serious decision-makers depend on for strategic planning and growth optimization.</p>
-                    </div>
-                    <div class="service-card">
-                        <h3>Revenue Attribution & Analytics</h3>
-                        <p>Multi-touch attribution across complex sales cycles. Complete ROI transparency with quarterly strategic reviews and competitive positioning analysis.</p>
-                    </div>
+            nav ul li a {
+                display: block;
+                padding: 0.6em 1.2em;
+                border-radius: 100px;
+                transition: all 0.2s ease;
+            }
+            /* Style the CTA button in mobile menu */
+            nav .cta {
+                margin-top: 1rem;
+                padding: 1rem 2rem;
+                border: 2px solid #B7472A;
+                border-radius: 50px;
+                text-align: center;
+            }
+            /* Smaller text on very small screens */
+            @media screen and (max-width: 400px) {
+                nav ul {
+                    font-size: 1.5rem;
+                }
+            }
+        }
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 100px;
+            text-align: center;
+            background: linear-gradient(135deg, #fefefe 0%, #f9f8f6 100%);
+        }
+        .hero h1 {
+            font-size: 3.8rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #B7472A;
+            letter-spacing: -1px;
+            line-height: 1.2;
+        }
+        .hero .subtitle {
+            font-size: 1.4rem;
+            color: #6B7280;
+            margin-bottom: 50px;
+            font-weight: 400;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .cta-button {
+            background: #B7472A;
+            color: #ffffff;
+            padding: 20px 45px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(183, 71, 42, 0.3);
+        }
+        .cta-button:hover {
+            background: #9A3B23;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(183, 71, 42, 0.4);
+        }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_TRACKING_ID');
+    </script>
+    <!-- Page-specific tracking -->
+    <!-- Quicklink Page Preloading -->
+    <script defer src="https://cdn.jsdelivr.net/npm/quicklink@3.0.1/dist/quicklink.umd.js"></script>
+    <script>
+        window.addEventListener('load', () => {
+        quicklink.listen();
+        });
+    </script>
+</head>
+<body class="homepage">
+    <header>
+        <nav aria-label="Main navigation">
+            <a href="/" class="nav-link current" aria-current="page" title="Hawkwood Corporation"><img src="hawkwood-corporation-logo.png" width="40px" height="40px" class="logo" alt="Hawkwood Corporation Logo"></a>
+            <ul>
+                <li><a href="/about" class="nav-link">About</a></li>
+                <li><a href="/projects" class="nav-link">Projects</a></li>
+                <li><a href="/intelligence" class="nav-link">Intelligence</a></li>
+            </ul>
+            <a href="/call-us" class="nav-link call-us-link">Call Us</a>
+            <input id="nav-toggle-button" type="checkbox">
+            <label id="nav-label" for="nav-toggle-button"><span class="nav-toggle-symbol"></span></label>
+        </nav>
+    </header>
+    <section class="hero">
+        <div class="container">
+            <h1>Strategic Revenue Engineering</h1>
+            <p class="subtitle">We deliver the 10:1+ ROI performance that serious businesses demand. Whether you're managing billions in assets or scaling a high-growth enterprise, we architect revenue systems that perform under pressure.</p>
+            <a href="#deployment" class="cta-button">Request Strategic Briefing</a>
+        </div>
+    </section>
+    <section class="section" id="operations">
+        <div class="container">
+            <div class="badge">Precision Operations</div>
+            <h2>Revenue Engineering</h2>
+            <p class="section-intro">We don't just run campaigns—we architect revenue systems. Every strategy is designed for sophisticated businesses with serious growth objectives and performance requirements.</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Strategic Search Operations</h3>
+                    <p>Google Ads campaigns engineered for competitive markets and premium customer acquisition. We navigate complex landscapes to deliver measurable client growth at scale.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Market Intelligence Systems</h3>
+                    <p>Comprehensive competitive analysis, target market profiling, and performance attribution that serious decision-makers depend on for strategic planning and growth optimization.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Revenue Attribution & Analytics</h3>
+                    <p>Multi-touch attribution across complex sales cycles. Complete ROI transparency with quarterly strategic reviews and competitive positioning analysis.</p>
                 </div>
             </div>
-        </section>
-        <section class="section section-sage" id="intelligence">
-            <div class="container">
-                <div class="badge">Combat Record</div>
-                <h2>Enterprise Performance Standards</h2>
-                <p class="section-intro">Our track record speaks to the sophisticated expectations of serious businesses. These are the metrics that matter when performance is everything.</p>
-                <div class="metrics">
-                    <div class="metric">
-                        <span class="metric-number">16.7:1</span>
-                        <span class="metric-label">Average ROI</span>
-                        <span class="metric-description">Well above institutional 10:1 minimum</span>
-                    </div>
-                    <div class="metric">
-                        <span class="metric-number">£8.4M</span>
-                        <span class="metric-label">Revenue Generated</span>
-                        <span class="metric-description">Attributable to our campaigns</span>
-                    </div>
-                    <div class="metric">
-                        <span class="metric-number">127</span>
-                        <span class="metric-label">Premium Clients</span>
-                        <span class="metric-description">Successfully acquired</span>
-                    </div>
-                    <div class="metric">
-                        <span class="metric-number">£540K</span>
-                        <span class="metric-label">Average Deal Size</span>
-                        <span class="metric-description">Enterprise client value</span>
-                    </div>
+        </div>
+    </section>
+    <section class="section section-sage" id="intelligence">
+        <div class="container">
+            <div class="badge">Combat Record</div>
+            <h2>Enterprise Performance Standards</h2>
+            <p class="section-intro">Our track record speaks to the sophisticated expectations of serious businesses. These are the metrics that matter when performance is everything.</p>
+            <div class="metrics">
+                <div class="metric">
+                    <span class="metric-number">16.7:1</span>
+                    <span class="metric-label">Average ROI</span>
+                    <span class="metric-description">Well above institutional 10:1 minimum</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-number">£8.4M</span>
+                    <span class="metric-label">Revenue Generated</span>
+                    <span class="metric-description">Attributable to our campaigns</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-number">127</span>
+                    <span class="metric-label">Premium Clients</span>
+                    <span class="metric-description">Successfully acquired</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-number">£540K</span>
+                    <span class="metric-label">Average Deal Size</span>
+                    <span class="metric-description">Enterprise client value</span>
                 </div>
             </div>
-        </section>
-        <section class="section" id="leadership">
-            <div class="container">
-                <div class="badge">Strategic Leadership</div>
-                <h2>Principal & Founder</h2>
-                <div class="about-content">
-                    <div>
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='400' viewBox='0 0 300 400'%3E%3Crect width='300' height='400' fill='%23f0f0f0'/%3E%3Ctext x='150' y='200' text-anchor='middle' dy='.3em' font-family='Georgia, serif' font-size='16' fill='%23666'%3EYour Professional Photo%3C/text%3E%3C/svg%3E" alt="Jake - Principal, Hawkwood Corporation" class="profile-image">
-                    </div>
-                    <div class="about-text">
-                        <h3>Jake, Principal & Strategic Director</h3>
-                        <p>Former systems architect with deep experience in autonomous market engineering and distributed systems. I founded Hawkwood Corporation on the principle that serious businesses deserve marketing operations as sophisticated as their core strategies.</p>
-                        <p>My approach combines <span class="highlight">data-driven systems thinking</span> with the performance standards and strategic oversight that growth-focused organizations require. Every campaign is architected for long-term relationship building and exceptional ROI that defines successful partnerships.</p>
-                        <p>I personally oversee every client engagement, ensuring the strategic oversight and attention to detail that premium partnerships demand.</p>
-                    </div>
+        </div>
+    </section>
+    <section class="section" id="leadership">
+        <div class="container">
+            <div class="badge">Strategic Leadership</div>
+            <h2>Principal & Founder</h2>
+            <div class="about-content">
+                <div>
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='400' viewBox='0 0 300 400'%3E%3Crect width='300' height='400' fill='%23f0f0f0'/%3E%3Ctext x='150' y='200' text-anchor='middle' dy='.3em' font-family='Georgia, serif' font-size='16' fill='%23666'%3EYour Professional Photo%3C/text%3E%3C/svg%3E" alt="Jake - Principal, Hawkwood Corporation" class="profile-image">
+                </div>
+                <div class="about-text">
+                    <h3>Jake, Principal & Strategic Director</h3>
+                    <p>Former systems architect with deep experience in autonomous market engineering and distributed systems. I founded Hawkwood Corporation on the principle that serious businesses deserve marketing operations as sophisticated as their core strategies.</p>
+                    <p>My approach combines <span class="highlight">data-driven systems thinking</span> with the performance standards and strategic oversight that growth-focused organizations require. Every campaign is architected for long-term relationship building and exceptional ROI that defines successful partnerships.</p>
+                    <p>I personally oversee every client engagement, ensuring the strategic oversight and attention to detail that premium partnerships demand.</p>
                 </div>
             </div>
-        </section>
-        <section class="section contact" id="deployment">
-            <div class="container">
-                <h2>Request Strategic Deployment</h2>
-                <p class="section-intro" style="color: rgba(255,255,255,0.9);">Ready to engineer the revenue systems your business deserves? Let's discuss your strategic objectives and performance requirements.</p>
-                <form class="contact-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="firm-name">Company / Organization</label>
-                            <input type="text" id="firm-name" name="firm-name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="contact-name">Your Name</label>
-                            <input type="text" id="contact-name" name="contact-name" required>
-                        </div>
+        </div>
+    </section>
+    <section class="section contact" id="deployment">
+        <div class="container">
+            <h2>Request Strategic Deployment</h2>
+            <p class="section-intro" style="color: rgba(255,255,255,0.9);">Ready to engineer the revenue systems your business deserves? Let's discuss your strategic objectives and performance requirements.</p>
+            <form class="contact-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firm-name">Company / Organization</label>
+                        <input type="text" id="firm-name" name="firm-name" required>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="email">Contact Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="institution-type">Business Type</label>
-                            <select id="institution-type" name="institution-type" required>
-                                <option value="">Select Business Type</option>
-                                <option value="financial-services">Financial Services</option>
-                                <option value="technology">Technology / SaaS</option>
-                                <option value="professional-services">Professional Services</option>
-                                <option value="healthcare">Healthcare / Medical</option>
-                                <option value="manufacturing">Manufacturing / Industrial</option>
-                                <option value="real-estate">Real Estate / Property</option>
-                                <option value="retail-ecommerce">Retail / E-commerce</option>
-                                <option value="other-enterprise">Other Enterprise</option>
-                            </select>
-                        </div>
+                    <div class="form-group">
+                        <label for="contact-name">Your Name</label>
+                        <input type="text" id="contact-name" name="contact-name" required>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="aum">Annual Revenue</label>
-                            <select id="aum" name="aum" required>
-                                <option value="">Select Revenue Range</option>
-                                <option value="10m-50m">£10M - £50M</option>
-                                <option value="50m-250m">£50M - £250M</option>
-                                <option value="250m-1b">£250M - £1B</option>
-                                <option value="1b-plus">£1B+</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="budget">Monthly Marketing Investment</label>
-                            <select id="budget" name="budget" required>
-                                <option value="">Select Investment Range</option>
-                                <option value="15k-30k">£15,000 - £30,000</option>
-                                <option value="30k-50k">£30,000 - £50,000</option>
-                                <option value="50k-100k">£50,000 - £100,000</option>
-                                <option value="100k-plus">£100,000+</option>
-                            </select>
-                        </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Contact Email</label>
+                        <input type="email" id="email" name="email" required>
                     </div>
-                    <div class="form-group full-width">
-                        <label for="strategic-objectives">Strategic Objectives & Performance Requirements</label>
-                        <textarea id="strategic-objectives" name="strategic-objectives" rows="5" placeholder="Describe your current growth challenges, target market, and specific ROI expectations..." required></textarea>
+                    <div class="form-group">
+                        <label for="institution-type">Business Type</label>
+                        <select id="institution-type" name="institution-type" required>
+                            <option value="">Select Business Type</option>
+                            <option value="financial-services">Financial Services</option>
+                            <option value="technology">Technology / SaaS</option>
+                            <option value="professional-services">Professional Services</option>
+                            <option value="healthcare">Healthcare / Medical</option>
+                            <option value="manufacturing">Manufacturing / Industrial</option>
+                            <option value="real-estate">Real Estate / Property</option>
+                            <option value="retail-ecommerce">Retail / E-commerce</option>
+                            <option value="other-enterprise">Other Enterprise</option>
+                        </select>
                     </div>
-                    <button type="submit" class="cta-button" style="margin-top: 20px;">Submit Strategic Brief</button>
-                </form>
-            </div>
-        </section>
-        <footer>
-            <div class="container">
-                <p>&copy; 2025 Hawkwood Corporation. Strategic revenue engineering for serious businesses.</p>
-            </div>
-        </footer>
-    </body>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aum">Annual Revenue</label>
+                        <select id="aum" name="aum" required>
+                            <option value="">Select Revenue Range</option>
+                            <option value="10m-50m">£10M - £50M</option>
+                            <option value="50m-250m">£50M - £250M</option>
+                            <option value="250m-1b">£250M - £1B</option>
+                            <option value="1b-plus">£1B+</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="budget">Monthly Marketing Investment</label>
+                        <select id="budget" name="budget" required>
+                            <option value="">Select Investment Range</option>
+                            <option value="15k-30k">£15,000 - £30,000</option>
+                            <option value="30k-50k">£30,000 - £50,000</option>
+                            <option value="50k-100k">£50,000 - £100,000</option>
+                            <option value="100k-plus">£100,000+</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group full-width">
+                    <label for="strategic-objectives">Strategic Objectives & Performance Requirements</label>
+                    <textarea id="strategic-objectives" name="strategic-objectives" rows="5" placeholder="Describe your current growth challenges, target market, and specific ROI expectations..." required></textarea>
+                </div>
+                <button type="submit" class="cta-button" style="margin-top: 20px;">Submit Strategic Brief</button>
+            </form>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Hawkwood Corporation. Strategic revenue engineering for serious businesses.</p>
+        </div>
+    </footer>
+</body>
 </html>

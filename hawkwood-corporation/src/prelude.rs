@@ -1,4 +1,4 @@
-pub use crate::{page_types::*, sections::*, site::*, systems::*};
+pub use crate::{page_types::*, sections::*, site::*, systems::*, parts::*};
 
 pub use crate::systems::{
     nav_system::*, 

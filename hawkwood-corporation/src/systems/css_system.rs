@@ -3,6 +3,7 @@ use crate::prelude::*;
 impl Site {
     
     pub fn declare_css(&mut self, key: &str, css: &str) {
+        let css = css.replace("{}", "");
         if !self.css.contains_key(key) {
             println!("Declared CSS: {}", key);
             self.css.insert(key.to_string(), css.to_string());
@@ -10,7 +11,7 @@ impl Site {
     }
     
     pub fn construct_css(&self) -> String {
-        let priority_order = ["foundation", "layout", "typography"]; // Foundation stuff
+        let priority_order = ["foundation", "sovereign_colors", "layout", "typography", "header", "nav_toggle"]; // Foundation stuff
         let mut result = Vec::new();
         
         // Priority CSS first (the foundational stuff)

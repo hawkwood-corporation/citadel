@@ -15,6 +15,10 @@ impl Site {
             <head>
                 <title>{title}</title>
                 <meta name="description" content="{metadescription}">
+                
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
                 <style>
                     [CSS_POSITION]
                 </style>
@@ -44,9 +48,67 @@ impl Site {
         
         self.declare_css("foundation", "
         
+        {}
+
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        
         
         
         ");
+        
+        
+        
+        self.declare_css("sovereign_colors", "
+        {}
+        /* ===== SOVEREIGN COLORS ===== */
+        
+        :root {
+            --smoky-black: #272b2d;
+            --terracotta: #B7472A;
+            --sage: #87A96B;
+            --sovereign-white: #fefefe;
+            --old-money-grey: #6B7280;
+        }
+        
+        ");
+        
+        
+        self.declare_css("typography", "
+        {}
+        /* ===== TYPOGRAPHY ===== */
+        
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        form,
+        input,
+        button,
+        a,
+        ul,
+        ol,
+        li {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-weight: 400;
+        }
+        
+        
+        
+        
+        
+        ");
+        
+        
+        
         
         content
         

@@ -49,10 +49,20 @@ impl Site {
         let aria_current = if is_current { r#" aria-current="page""# } else { "" };
         let current_class = if is_current { " current" } else { "" };
         let class = nav_item.class.as_ref().map(|c| format!(" {}", c)).unwrap_or_default();
+        let title_attr = if nav_item.path == "" || nav_item.path == "/" {
+            format!(r##" title="{}""##, self.title)
+        } else {
+            String::new()
+        };
         
         format!(
-            r#"<a href="{}" class="nav-link{}{}{}">{}</a>"#,
-            nav_item.path, current_class, aria_current, class, nav_item.content
+            r#"<a href="{path}" class="nav-link{current}{class}"{aria}{title}>{content}</a>"#,
+            path = nav_item.path,
+            current = current_class, 
+            class = class,
+            aria = aria_current,
+            title = title_attr,
+            content = nav_item.content
         )
         
     }

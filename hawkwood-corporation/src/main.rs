@@ -17,6 +17,8 @@ fn main() {
     
     site.write_files();
     
+    site.copy_assets();
+    
   
     
 }
