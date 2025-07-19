@@ -2,28 +2,67 @@ use crate::prelude::*;
 
 pub struct NavItem {
     pub name: String,
-    pub url: String,
+    pub path: String,
 }
 
+pub struct NavWrappedItem {
+    pub name: String,
+    pub path: String,
+    pub content: String,
+}
+
+
 impl Site {
-    pub fn create_nav_items(&self) -> Vec<NavItem> {
-        vec![
-            NavItem { 
-                name: "Operations".to_owned(), 
-                url: "/operations".to_owned() 
-            },
-            NavItem { 
-                name: "Intelligence".to_owned(), 
-                url: "/intelligence".to_owned() 
-            },
-            NavItem { 
-                name: "Leadership".to_owned(), 
-                url: "/leadership".to_owned() 
-            },
-            NavItem { 
-                name: "Deployment".to_owned(), 
-                url: "/deployment".to_owned() 
-            },
-        ]
+    
+    pub fn construct_nav_url(&self, item: &NavItem) -> Url {
+        self.base_url.join(&item.path).unwrap()
     }
+    
+    pub fn construct_nav_links(&self, nav_items: &[NavItem], page: &PageData) -> String {
+
+        let current_slug = page.slug.as_deref().unwrap_or("/");
+        
+        let nav_links: Vec<String> = nav_items
+            .iter()
+            .map(|item| {
+                let is_current = self.is_current_page(&item.path, current_slug);
+                let aria_current = if is_current { r#" aria-current="page""# } else { "" };
+                let current_class = if is_current { " current" } else { "" };
+                
+                format!(
+                    r#"<li><a href="{}" class="nav-link{}"{}>{}</a></li>"#,
+                    item.path, current_class, aria_current, item.name
+                )
+            })
+            .collect();
+
+
+            nav_links.join("\n")
+
+    }
+    
+    pub fn construct_nav_wrapped_link(&self, nav_item: &NavWrappedItem, page: &PageData) -> String {
+        
+        let current_slug = page.slug.as_deref().unwrap_or("/");
+        let is_current = self.is_current_page(&nav_item.path, current_slug);
+        let aria_current = if is_current { r#" aria-current="page""# } else { "" };
+        let current_class = if is_current { " current" } else { "" };
+        
+        format!(
+            r#"<a href="{}" class="nav-link{}"{}>{}</a>"#,
+            nav_item.path, current_class, aria_current, nav_item.content
+        )
+        
+    }
+
+    fn is_current_page(&self, nav_url: &str, current_slug: &str) -> bool {
+        match nav_url {
+            "/" => current_slug.is_empty() || current_slug == "/",
+            url => {
+                let nav_slug = url.trim_start_matches('/');
+                current_slug == nav_slug || current_slug == url
+            }
+        }
+    }
+    
 }

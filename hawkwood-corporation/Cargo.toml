@@ -5,3 +5,4 @@ edition = "2024"
 
 [dependencies]
 slugify = "0.1.0"
+url = "2.5.4"

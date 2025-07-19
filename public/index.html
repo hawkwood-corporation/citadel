@@ -1,4 +1,3 @@
-;
 <!DOCTYPE html>
 <html lang="en-US">
     <head>
@@ -63,17 +62,19 @@
             });
         </script>
     </head>
-    <body>
+    <body class="homepage">
         <header>
-            <nav class="container">
-                <a href="#" class="logo">HAWKWOOD CORPORATION</a>
-                <ul class="nav-links">
-                    <li><a href="/operations">Operations</a></li>
-                    <li><a href="/intelligence">Intelligence</a></li>
-                    <li><a href="/leadership">Leadership</a></li>
-                    <li><a href="/deployment">Deployment</a></li>
+            <div class="logo">
+                <a href="/" class="nav-link current" aria-current="page"><img src="hawkwood-corporation-logo.svg" alt="Hawkwood Corporation Logo"></a>
+            </div>
+            <nav aria-label="Main navigation">
+                <ul>
+                    <li><a href="/about" class="nav-link">About</a></li>
+                    <li><a href="/projects" class="nav-link">Projects</a></li>
+                    <li><a href="/intelligence" class="nav-link">Intelligence</a></li>
                 </ul>
             </nav>
+            <a href="/call-us" class="nav-link">Call Us</a>
         </header>
         <section class="hero">
             <div class="container">

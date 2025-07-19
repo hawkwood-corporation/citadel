@@ -6,7 +6,7 @@ impl Site {
         
         let final_css = self.construct_css();
         
-        println!("{}",final_css);
+        //println!("{}",final_css);
         
         for page in &mut self.pages {
             let page_data = page.as_page_data_mut();

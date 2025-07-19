@@ -3,6 +3,7 @@ use std::{collections::HashMap, path::PathBuf/*, sync::Mutex*/};
 
 pub struct Site {
     pub title: String,
+    pub base_url: Url,
     pub pages: Vec<Page>,
     pub sections: Sections,
     pub css: HashMap<String, String>,
@@ -13,6 +14,7 @@ impl Site {
     pub fn new() -> Self {
         Self {
             title: "Hawkwood Corporation".to_owned(),
+            base_url: Url::parse("https://hawkwoodcorporation.com/").expect("Invalid base URL"),
             pages: Vec::new(),
             sections: Sections::new(),
             css: HashMap::new(),
