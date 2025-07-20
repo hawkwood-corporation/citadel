@@ -64,6 +64,10 @@ header {
             }
         }
         
+        .directive {
+            padding: 10px 50px;
+        }
+        
         
     }
 

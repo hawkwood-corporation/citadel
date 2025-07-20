@@ -18,7 +18,7 @@ impl Site {
 
 .directive {
     border: 1px solid var(--smoky-black);
-    padding: 10px 50px;
+    padding: 12px 30px;
     display: flex;
     gap: 10tem;
     color: var(--smoky-black);
@@ -48,6 +48,8 @@ impl Site {
         transition: all 0.3s ease; /* Smooth fill AND transform */
         transform-origin: center; /* Rotate from center */
     }
+    
+    
 }
 
 
