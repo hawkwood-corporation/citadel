@@ -99,10 +99,18 @@ impl Site {
         li {
             font-family: 'Hanken Grotesk', sans-serif;
             font-weight: 400;
+            color: var(--smoky-black);
+        }
+        
+        .symbol {
+            fill: var(--smoky-black);
         }
         
         
-        
+        p {
+            font-size: 18tem;
+            line-height: 1.4;
+        }
         
         
         ");

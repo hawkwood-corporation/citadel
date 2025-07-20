@@ -1,5 +1,7 @@
 /hawkwood-corporation/target/
 **/*.rs.bk
+/assets/
+/public/
 
 # Rust build artifacts
 target/

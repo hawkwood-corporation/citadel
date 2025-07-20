@@ -3,7 +3,7 @@ mod sections {
     pub mod head;
     pub mod header;
     pub mod css;
-    pub mod homepage_hero;
+    pub mod column_hero;
 }
 mod site;
 mod systems {
@@ -24,4 +24,5 @@ mod page_types {
 
 mod parts {
     pub mod nav_toggle;
+    pub mod directive_buttons;
 }

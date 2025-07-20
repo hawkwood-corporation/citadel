@@ -20,51 +20,7 @@ impl Site {
         
         self.declare_css( "homepage", "
         
-        /* Hero Section */
-        .hero {
-            padding: 120px 0 100px;
-            text-align: center;
-            background: linear-gradient(135deg, #fefefe 0%, #f9f8f6 100%);
-        }
 
-        .hero h1 {
-            font-size: 3.8rem;
-            font-weight: 700;
-            margin-bottom: 25px;
-            color: #B7472A;
-            letter-spacing: -1px;
-            line-height: 1.2;
-        }
-
-        .hero .subtitle {
-            font-size: 1.4rem;
-            color: #6B7280;
-            margin-bottom: 50px;
-            font-weight: 400;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-button {
-            background: #B7472A;
-            color: #ffffff;
-            padding: 20px 45px;
-            font-size: 18px;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 6px;
-            transition: all 0.3s;
-            display: inline-block;
-            box-shadow: 0 4px 12px rgba(183, 71, 42, 0.3);
-        }
-
-        .cta-button:hover {
-            background: #9A3B23;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(183, 71, 42, 0.4);
-        }
-        
         ");
         
         // textarea tag
