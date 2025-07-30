@@ -26,6 +26,7 @@ impl Site {
     width: fit-content;
     font-size: 18tem;
     text-decoration: none;
+    text-wrap: nowrap;
     
     &:hover {
         background-color: var(--smoky-black);

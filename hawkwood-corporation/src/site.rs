@@ -1,4 +1,4 @@
-use crate::prelude::*;
+use crate::prelude::{css_system::Breakpoints, *};
 use std::{collections::HashMap, path::PathBuf/*, sync::Mutex*/};
 
 pub struct Site {
@@ -7,6 +7,7 @@ pub struct Site {
     pub pages: Vec<Page>,
     pub sections: Sections,
     pub css: HashMap<String, String>,
+    pub breakpoints: Breakpoints,
     pub settings: Settings,
 }
 
@@ -18,6 +19,9 @@ impl Site {
             pages: Vec::new(),
             sections: Sections::new(),
             css: HashMap::new(),
+            breakpoints: Breakpoints {
+                mobile: "1000px".to_owned(), 
+            },
             settings: Settings {
                 output_folder: PathBuf::from("public"),
             },

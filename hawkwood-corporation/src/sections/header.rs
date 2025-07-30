@@ -18,6 +18,7 @@ header {
     z-index: 10;
     padding: 18px 60px;
     margin: 0 auto;
+    max-width: 100%;
     
     nav {
         display: flex;
@@ -73,6 +74,33 @@ header {
 
 }
 
+@media screen and (max-width: [mobile]) {
+    
+    
+    header {
+        
+        nav {
+            
+            ul {
+                display: none;
+            }
+            
+            .directive {
+                display: none; 
+            }
+            
+            #nav-toggle-checkbox:checked {
+                
+                & ~ ul {
+                    display: flex;
+                }
+                
+            }
+        }
+        
+    }
+}
+
 
 
 "##);
@@ -119,19 +147,20 @@ header {
         
         let call_us_link = self.construct_nav_wrapped_link(&call_us_item, &page);
         
-        let nav_toggle = self.construct_nav_toggle();
+        let (nav_checkbox, nav_button) = self.construct_nav_toggle();
 
         format!(
             r####"
             
             <header>
             <nav aria-label="Main navigation">
+                {nav_checkbox}
                 {home_link}                
                 <ul>
                     {nav_links}
                 </ul>
                 {call_us_link}
-                {nav_toggle}
+                {nav_button}
             </nav>
             </header>
             

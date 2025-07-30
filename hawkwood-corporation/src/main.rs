@@ -19,7 +19,5 @@ fn main() {
     
     site.copy_assets();
     
-  
-    
 }
 

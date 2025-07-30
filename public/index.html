@@ -55,6 +55,7 @@
             z-index: 10;
             padding: 18px 60px;
             margin: 0 auto;
+            max-width: 100%;
             nav {
                 display: flex;
                 justify-content: space-between;
@@ -97,117 +98,84 @@
                 }
             }
         }
+        @media screen and (max-width: 1000px) {
+            header {
+                nav {
+                    ul {
+                        display: none;
+                    }
+                    .directive {
+                        display: none;
+                    }
+                    #nav-toggle-checkbox:checked {
+                        & ~ ul {
+                            display: flex;
+                        }
+                    }
+                }
+            }
+        }
         /* ===== NAV TOGGLE BUTTON ===== */
         /* Hide checkbox */
-        #nav-toggle-button {
+        #nav-toggle-checkbox {
             display: none;
         }
         /* Nav toggle button (hidden by default) */
-        #nav-label {
-            display: none;
+        #nav-toggle-button {
+            --checkbox-width: 35px;
+            --padding: 10px;
             cursor: pointer;
             z-index: 2000;
+            display: none;
+            place-items: center;
+            height: calc(var(--checkbox-width) + var(--padding) * 2);
+            width: calc(var(--checkbox-width) + var(--padding) * 2);
+            padding: var(--padding);
         }
         /* Nav toggle symbol lines */
         .nav-toggle-symbol {
             position: relative;
-            width: 35px;
+            width: var(--checkbox-width);
             height: 3px;
             background: #B7472A;
             display: block;
             transition: all 0.2s ease;
-        }
-        .nav-toggle-symbol::before,
-        .nav-toggle-symbol::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            width: 35px;
-            height: 3px;
-            background: #B7472A;
-            transition: all 0.2s ease;
-        }
-        .nav-toggle-symbol::before {
-            top: -10px;
-        }
-        .nav-toggle-symbol::after {
-            top: 10px;
-        }
-        /* Transform to X when checked */
-        #nav-toggle-button:checked + #nav-label .nav-toggle-symbol {
-            background: transparent;
-        }
-        #nav-toggle-button:checked + #nav-label .nav-toggle-symbol::before {
-            top: 0;
-            transform: rotate(135deg);
-        }
-        #nav-toggle-button:checked + #nav-label .nav-toggle-symbol::after {
-            top: 0;
-            transform: rotate(-135deg);
-        }
-        /* ===== NAV TOGGLE BUTTON MOBILE ===== */
-        @media screen and (max-width: 600px) {
-            /* Show nav toggle on mobile */
-            #nav-label {
-                display: block;
-            }
-            /* Hide desktop nav by default */
-            nav ul, nav ul ~ a {
-                display: none;
-            }
-            /* Show nav when checkbox is checked */
-            #nav-toggle-button:checked ~ ul,
-            #nav-toggle-button:checked ~ .cta {
-                display: block;
-            }
-            /* Full screen overlay when menu is open */
-            header:has(#nav-toggle-button:checked) {
-                position: fixed;
-                top: 0;
+            &::before,
+            &::after {
+                content: "";
+                position: absolute;
                 left: 0;
-                width: 100vw;
-                height: 100vh;
-                background: var(--background-color);
-                z-index: 1000;
-            }
-            /* Lock body scroll when menu is open */
-            body:has(#nav-toggle-button:checked) {
-                overflow: hidden;
-            }
-            /* Mobile menu styles */
-            nav ul {
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 2rem;
-                font-size: 2rem;
-                font-weight: 600;
-                height: 100vh;
-                padding: 0;
-                margin: 0;
-            }
-            nav ul li {
-                list-style: none;
-            }
-            nav ul li a {
-                display: block;
-                padding: 0.6em 1.2em;
-                border-radius: 100px;
+                width: var(--checkbox-width);
+                height: 3px;
+                background: #B7472A;
                 transition: all 0.2s ease;
             }
-            /* Style the CTA button in mobile menu */
-            nav .cta {
-                margin-top: 1rem;
-                padding: 1rem 2rem;
-                border: 2px solid #B7472A;
-                border-radius: 50px;
-                text-align: center;
+            &::before {
+                top: -10px;
             }
-            /* Smaller text on very small screens */
-            @media screen and (max-width: 400px) {
-                nav ul {
-                    font-size: 1.5rem;
-                }
+            &::after {
+                top: 10px;
+            }
+        }
+        /* Transform to X when checked */
+        #nav-toggle-checkbox:checked ~ #nav-toggle-button {
+            .nav-toggle-symbol {
+                background: transparent;
+            }
+            .nav-toggle-symbol::before {
+                top: 0;
+                transform: rotate(135deg);
+            }
+            .nav-toggle-symbol::after {
+                top: 0;
+                transform: rotate(-135deg);
+            }
+        }
+        /* ===== NAV TOGGLE BUTTON MOBILE ===== */
+        @media screen and (max-width: 1000px) {
+            /* Show nav toggle on mobile */
+            #nav-toggle-button {
+                display: flex;
             }
         }
         section.column-hero {
@@ -242,6 +210,7 @@
             width: fit-content;
             font-size: 1.125rem;
             text-decoration: none;
+            text-wrap: nowrap;
             &:hover {
                 background-color: var(--smoky-black);
                 color: white;
@@ -283,6 +252,7 @@
 <body class="homepage">
     <header>
         <nav aria-label="Main navigation">
+            <input id="nav-toggle-checkbox" type="checkbox">
             <a href="/" class="nav-link current company-title" aria-current="page" title="Hawkwood Corporation">Hawkwood Corporation</a>
             <ul>
                 <li><a href="/about" class="nav-link">About</a></li>
@@ -290,8 +260,9 @@
                 <li><a href="/intelligence" class="nav-link">Intelligence</a></li>
             </ul>
             <a href="/call-us" class="nav-link directive">Call Us <svg class="symbol call-symbol" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M144.27,45.93a8,8,0,0,1,9.8-5.66,86.22,86.22,0,0,1,61.66,61.66,8,8,0,0,1-5.66,9.8A8.23,8.23,0,0,1,208,112a8,8,0,0,1-7.73-5.94,70.35,70.35,0,0,0-50.33-50.33A8,8,0,0,1,144.27,45.93Zm-2.33,41.8c13.79,3.68,22.65,12.54,26.33,26.33A8,8,0,0,0,176,120a8.23,8.23,0,0,0,2.07-.27,8,8,0,0,0,5.66-9.8c-5.12-19.16-18.5-32.54-37.66-37.66a8,8,0,1,0-4.13,15.46Zm81.94,95.35A56.26,56.26,0,0,1,168,232C88.6,232,24,167.4,24,88A56.26,56.26,0,0,1,72.92,32.12a16,16,0,0,1,16.62,9.52l21.12,47.15,0,.12A16,16,0,0,1,109.39,104c-.18.27-.37.52-.57.77L88,129.45c7.49,15.22,23.41,31,38.83,38.51l24.34-20.71a8.12,8.12,0,0,1,.75-.56,16,16,0,0,1,15.17-1.4l.13.06,47.11,21.11A16,16,0,0,1,223.88,183.08Zm-15.88-2s-.07,0-.11,0h0l-47-21.05-24.35,20.71a8.44,8.44,0,0,1-.74.56,16,16,0,0,1-15.75,1.14c-18.73-9.05-37.4-27.58-46.46-46.11a16,16,0,0,1,1-15.7,6.13,6.13,0,0,1,.57-.77L96,95.15l-21-47a.61.61,0,0,1,0-.12A40.2,40.2,0,0,0,40,88,128.14,128.14,0,0,0,168,216,40.21,40.21,0,0,0,208,181.07Z"></path></svg></a>
-            <input id="nav-toggle-button" type="checkbox">
-            <label id="nav-label" for="nav-toggle-button"><span class="nav-toggle-symbol"></span></label>
+            <label id="nav-toggle-button" for="nav-toggle-checkbox">
+                <span class="nav-toggle-symbol"></span>
+            </label>
         </nav>
     </header>
     <section class="column-hero">

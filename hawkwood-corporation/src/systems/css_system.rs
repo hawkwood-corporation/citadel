@@ -1,5 +1,9 @@
 use crate::prelude::*;
 
+pub struct Breakpoints {
+    pub mobile: String,
+}
+
 impl Site {
     
     pub fn declare_css(&mut self, key: &str, css: &str) {
@@ -34,6 +38,8 @@ impl Site {
         let full_css = result.join("\n");
         
         let full_css = self.convert_tem_to_rem(full_css);
+        
+        let full_css = self.css_value_replacer(full_css);
         
         full_css
     }
@@ -111,6 +117,11 @@ impl Site {
         }
         
         result
+    }
+    
+    fn css_value_replacer(&self, css: String) -> String {
+        css
+            .replace("[mobile]", &self.breakpoints.mobile)
     }
     
 }
