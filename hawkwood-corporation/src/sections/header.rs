@@ -21,6 +21,8 @@ header {
     max-width: 100%;
     
     nav {
+        --transform: scale(0.97);
+        --nav-link-padding-x: 14px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -38,13 +40,14 @@ header {
             li {
                 list-style: none;
                 transition: transform 0.3s ease;
+                width: fit-content;
                 
                 &:hover {
-                    transform: scale(0.97);
+                    transform: var(--transform);
                 }
             
                 a {
-                    padding: 14px 10px;
+                    padding: var(--nav-link-padding-x) 14px;
                 }
             }
         }
@@ -61,7 +64,7 @@ header {
             transition: transform 0.3s ease;
             
             &:hover {
-                transform: scale(0.97);
+                transform: var(--transform);
             }
         }
         
@@ -79,25 +82,58 @@ header {
     
     header {
         
+        &:has(#nav-toggle-checkbox:checked){
+            position: relative;
+            padding-bottom: 30px;
+        }
+        
         nav {
+            
+            --transform: translateX(6px) scale(0.98);
             
             ul {
                 display: none;
+                
+                li {
+                    a {
+                        margin-left: calc(-1 * var(--nav-link-padding-x));
+                    }
+                }
             }
             
             .directive {
                 display: none; 
             }
             
+            &:has(#nav-toggle-checkbox:checked){
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+                row-gap: 30px;
+            }
+            
             #nav-toggle-checkbox:checked {
                 
                 & ~ ul {
                     display: flex;
+                    flex-direction: column;
+                    grid-area: 2 / 1 / 2 / 3;
+                    padding-top: 10px;
                 }
                 
+                & ~ .directive {
+                    display: block;
+                    grid-area: 3 / 1 / 3 / 3;
+                    position: relative;
+                }
+                
+                
+                & ~ #nav-toggle-button {
+                    grid-area: 1 / 2;
+                }
             }
         }
-        
+
     }
 }
 
