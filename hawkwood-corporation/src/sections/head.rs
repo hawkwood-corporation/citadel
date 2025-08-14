@@ -15,6 +15,7 @@ impl Site {
             <head>
                 <title>{title}</title>
                 <meta name="description" content="{metadescription}">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 
                 <link rel="preconnect" href="https://fonts.googleapis.com">
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,6 +58,15 @@ impl Site {
             box-sizing: border-box;
         }
         
+        *:where(:not(html, iframe, canvas, img, svg, video, audio):not(svg *, symbol *)) {
+            all: unset;
+            display: revert;
+        }
+        
+        html, body {
+            overflow-x: hidden;
+        }
+                
         
         
         
@@ -77,6 +87,27 @@ impl Site {
         }
         
         ");
+        
+        
+        self.declare_css("layout", "
+        {}
+        /* ===== LAYOUT ===== */
+        
+        :root {
+        
+            --site-padding-x: 60px;
+            
+            @media screen and (max-width: [mobile]) {
+            
+                --site-padding-x: 30px;
+                
+            }
+        }
+        
+        
+        ");
+        
+        
         
         
         self.declare_css("typography", "
@@ -114,7 +145,6 @@ impl Site {
         
         
         ");
-        
         
         
         

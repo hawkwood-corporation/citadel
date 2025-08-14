@@ -22,9 +22,15 @@ impl Site {
     z-index: 2000;
     display: none;
     place-items: center;
-    height: calc(var(--checkbox-width) + var(--padding) * 2);
-    width: calc(var(--checkbox-width) + var(--padding) * 2);
+    justify-content: center;
+    /*height: calc(var(--checkbox-width) + var(--padding) * 2);
+    width: calc(var(--checkbox-width) + var(--padding) * 2);*/
+    height: 35px;
+    width: 35px;
     padding: var(--padding);
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* Nav toggle symbol lines */
@@ -35,6 +41,7 @@ impl Site {
     background: #B7472A;
     display: block;
     transition: all 0.2s ease;
+    user-select: none;
     
     &::before,
     &::after {
@@ -45,6 +52,7 @@ impl Site {
         height: 3px;
         background: #B7472A;
         transition: all 0.2s ease;
+        user-select: none;
     }
     
     &::before {

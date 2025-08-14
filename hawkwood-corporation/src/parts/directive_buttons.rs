@@ -37,9 +37,7 @@ impl Site {
             }
             .upper-right-arrow {
                 transform: rotate(45deg);
-            }
-        }
-        
+            } 
     }
     
     .symbol {
@@ -53,8 +51,7 @@ impl Site {
     
 }
 
-
-}"##);
+"##);
         
         let href = &directive.href;
         let text = &directive.text;

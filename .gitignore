@@ -2,6 +2,7 @@
 **/*.rs.bk
 /assets/
 /public/
+/unused/
 
 # Rust build artifacts
 target/

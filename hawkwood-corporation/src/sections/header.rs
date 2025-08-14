@@ -16,7 +16,7 @@ header {
     left: 0;
     right: 0;
     z-index: 10;
-    padding: 18px 60px;
+    padding: 18px var(--site-padding-x);
     margin: 0 auto;
     max-width: 100%;
     
@@ -51,11 +51,12 @@ header {
                 }
             }
         }
-        
+         
         a {
             text-decoration: none;
             color: var(--smoky-black);
             font-size: 18tem;
+            cursor: pointer;
         }
         
         .company-title {
@@ -64,7 +65,7 @@ header {
             transition: transform 0.3s ease;
             
             &:hover {
-                transform: var(--transform);
+                transform: scale(0.97);
             }
         }
         
@@ -81,6 +82,7 @@ header {
     
     
     header {
+
         
         &:has(#nav-toggle-checkbox:checked){
             position: relative;

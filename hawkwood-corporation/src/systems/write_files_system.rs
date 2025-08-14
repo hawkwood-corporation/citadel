@@ -19,9 +19,18 @@ impl Site {
         for page_item in &self.pages {
             let (page, filename) = match page_item {
                 
-                Page::Homepage { page } => {
-                    let filename = "index.html".to_owned();
-                    (page, filename)
+                Page::PillarPage { page, pillar, .. } => {
+                    
+                    match pillar {
+                        Pillar::Homepage => {
+                            let filename = "index.html".to_owned();
+                            (page, filename)
+                        }
+                        _ => {
+                            let filename = format!("{}.html", page.slug.as_ref().unwrap());
+                            (page, filename)
+                        }
+                    }
                 },
                 Page::BlogPost { page } /*| Page::ProductPage { page }*/ =>
                 {

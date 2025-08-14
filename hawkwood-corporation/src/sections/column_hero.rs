@@ -8,22 +8,43 @@ impl Site {
         self.declare_css("column_hero", r##"
         {}
         
-        section.column-hero {
+section.column-hero {
     display: grid;
     grid-template-columns: 1fr minmax(auto, 1440px) 1fr;
     align-items: center;
     height: 100vh;
-    padding: 0 40px;
-    background-image: url("/low-angle-shot-church-with-staple-bright-sky.jpg");
+    padding: 0 var(--site-padding-x);
+    background-image: url("/column-hero.jpg");
     background-size: cover;
     background-position: center;
+    filter: brightness(1.3) saturate(0.1);
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.4);
+        pointer-events: none;
+        z-index: 1;
+    }
+    
+   
     
     h1 {
         font-size: 80tem;
         font-weight: 600;
+        
+        @media screen and (max-width: [mobile]) {
+            
+            font-size: 40tem;
+            
+        }
     }
     
     .area {
+        z-index: 2;
         grid-column: 2;
         max-width: 720px;
         justify-self: start; /* Keeps it left-aligned within the center column */
@@ -31,9 +52,9 @@ impl Site {
         row-gap: 20px;
     }
 }
-                
-        
-        
+                        
+            
+            
         
         
         
