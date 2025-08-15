@@ -3,145 +3,140 @@ use crate::prelude::*;
 #[allow(unused_variables)]
 
 impl Site {
-    pub fn construct_header(&mut self, page: &PageData) -> String {
+    pub fn construct_header(&mut self, page: &PageFoundation) -> String {
         
         
         self.declare_css("header", r##"
 
-/* ===== HEADER ===== */
-{}
-header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
-    padding: 18px var(--site-padding-x);
-    margin: 0 auto;
-    max-width: 100%;
-    
-    nav {
-        --transform: scale(0.97);
-        --nav-link-padding-x: 14px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        max-width: 1440px;
-        gap: 40px;
-        margin: 0 auto;
-
-        ul {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-            margin: 0;
-            padding: 0;
-            
-            li {
-                list-style: none;
-                transition: transform 0.3s ease;
-                width: fit-content;
+            /* ===== HEADER ===== */
+            {}
+            header {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 10;
+                padding: 18px var(--site-padding-x);
+                margin: 0 auto;
+                max-width: 100%;
                 
-                &:hover {
-                    transform: var(--transform);
-                }
-            
-                a {
-                    padding: var(--nav-link-padding-x) 14px;
-                }
-            }
-        }
-         
-        a {
-            text-decoration: none;
-            color: var(--smoky-black);
-            font-size: 18tem;
-            cursor: pointer;
-        }
-        
-        .company-title {
-            font-size: 24tem;
-            color: var(--smoky-black);
-            transition: transform 0.3s ease;
-            
-            &:hover {
-                transform: scale(0.97);
-            }
-        }
-        
-        .directive {
-            padding: 10px 50px;
-        }
-        
-        
-    }
+                nav {
+                    --transform: scale(0.97);
+                    --nav-link-padding-x: 14px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    max-width: 1440px;
+                    gap: 40px;
+                    margin: 0 auto;
 
-}
-
-@media screen and (max-width: [mobile]) {
-    
-    
-    header {
-
-        
-        &:has(#nav-toggle-checkbox:checked){
-            position: relative;
-            padding-bottom: 30px;
-        }
-        
-        nav {
-            
-            --transform: translateX(6px) scale(0.98);
-            
-            ul {
-                display: none;
-                
-                li {
+                    ul {
+                        display: flex;
+                        list-style: none;
+                        gap: 30px;
+                        margin: 0;
+                        padding: 0;
+                        
+                        li {
+                            list-style: none;
+                            transition: transform 0.3s ease;
+                            width: fit-content;
+                            
+                            &:hover {
+                                transform: var(--transform);
+                            }
+                        
+                            a {
+                                padding: var(--nav-link-padding-x) 14px;
+                            }
+                        }
+                    }
+                    
                     a {
-                        margin-left: calc(-1 * var(--nav-link-padding-x));
+                        text-decoration: none;
+                        color: var(--smoky-black);
+                        font-size: 18tem;
+                        cursor: pointer;
+                    }
+                    
+                    .company-title {
+                        font-size: 24tem;
+                        color: var(--smoky-black);
+                        transition: transform 0.3s ease;
+                        
+                        &:hover {
+                            transform: scale(0.97);
+                        }
+                    }
+                    
+                    .directive {
+                        padding: 10px 50px;
                     }
                 }
             }
-            
-            .directive {
-                display: none; 
-            }
-            
-            &:has(#nav-toggle-checkbox:checked){
-                display: grid;
-                grid-template-columns: 1fr;
-                grid-template-rows: auto 1fr;
-                row-gap: 30px;
-            }
-            
-            #nav-toggle-checkbox:checked {
-                
-                & ~ ul {
-                    display: flex;
-                    flex-direction: column;
-                    grid-area: 2 / 1 / 2 / 3;
-                    padding-top: 10px;
+
+            @media screen and (max-width: [mobile]) {
+
+                header {
+
+                    &:has(#nav-toggle-checkbox:checked){
+                        position: relative;
+                        padding-bottom: 30px;
+                    }
+                    
+                    nav {
+                        
+                        --transform: translateX(6px) scale(0.98);
+                        
+                        ul {
+                            display: none;
+                            
+                            li {
+                                a {
+                                    margin-left: calc(-1 * var(--nav-link-padding-x));
+                                }
+                            }
+                        }
+                        
+                        .directive {
+                            display: none; 
+                        }
+                        
+                        &:has(#nav-toggle-checkbox:checked){
+                            display: grid;
+                            grid-template-columns: 1fr;
+                            grid-template-rows: auto 1fr;
+                            row-gap: 30px;
+                        }
+                        
+                        #nav-toggle-checkbox:checked {
+                            
+                            & ~ ul {
+                                display: flex;
+                                flex-direction: column;
+                                grid-area: 2 / 1 / 2 / 3;
+                                padding-top: 10px;
+                            }
+                            
+                            & ~ .directive {
+                                display: block;
+                                grid-area: 3 / 1 / 3 / 3;
+                                position: relative;
+                            }
+                            
+                            
+                            & ~ #nav-toggle-button {
+                                grid-area: 1 / 2;
+                            }
+                        }
+                    }
+
                 }
-                
-                & ~ .directive {
-                    display: block;
-                    grid-area: 3 / 1 / 3 / 3;
-                    position: relative;
-                }
-                
-                
-                & ~ #nav-toggle-button {
-                    grid-area: 1 / 2;
-                }
             }
-        }
-
-    }
-}
 
 
 
-"##);
+        "##);
         
         /*let home_nav_item = NavWrappedItem { 
             name: "Home".to_owned(), 

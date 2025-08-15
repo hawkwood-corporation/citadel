@@ -9,7 +9,7 @@ impl Site {
         //println!("{}",final_css);
         
         for page in &mut self.pages {
-            let page_data = page.as_page_data_mut();
+            let page_data = &mut page.foundation;
             
             if let Some(content) = &mut page_data.content {
                 // Replace CSS placeholder

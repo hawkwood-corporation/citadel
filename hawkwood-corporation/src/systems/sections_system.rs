@@ -2,9 +2,8 @@
 use crate::prelude::*;
 
 pub struct Section {
-    pub content: String
+    pub content: String,
 }
-
 
 /// Static, reusable sections
 pub struct Sections {
@@ -23,21 +22,17 @@ impl Sections {
 
 impl Site {
     pub fn construct_sections(&mut self) {
-        
-        
-        
         // Clean, focused section creation
         self.sections.main_wrap_open = r####"
 <div class="site-container">
     <main>
-    "####.to_string();
-        
+    "####
+            .to_owned();
+
         self.sections.main_wrap_close = r####"
     </main>
 </div>
-    "####.to_string();
+    "####
+            .to_owned();
     }
-    
-    
-    
 }

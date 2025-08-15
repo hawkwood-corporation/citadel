@@ -17,31 +17,23 @@ impl Site {
         println!("Pages to generate: {}", &self.pages.len());
         
         for page_item in &self.pages {
-            let (page, filename) = match page_item {
-                
-                Page::PillarPage { page, pillar, .. } => {
-                    
-                    match pillar {
-                        Pillar::Homepage => {
-                            let filename = "index.html".to_owned();
-                            (page, filename)
-                        }
-                        _ => {
-                            let filename = format!("{}.html", page.slug.as_ref().unwrap());
-                            (page, filename)
-                        }
-                    }
-                },
-                Page::BlogPost { page } /*| Page::ProductPage { page }*/ =>
-                {
-                    let filename = format!("{}.html", page.slug.as_ref().unwrap());
-                    (page, filename)
-                },
-            };
-            println!("Writing page to file: {}", filename);
-            fs::write(output_path.join(filename), page.content.as_ref().unwrap())
+        let (page, filename) = match &page_item.specification {
+            PageSpecification::PillarPage(pillar_type) => {
+                let filename = match pillar_type {
+                    Pillar::Homepage => "index.html".to_owned(),
+                    _ => format!("{}.html", page_item.foundation.slug.as_ref().unwrap()),
+                };
+                (&page_item.foundation, filename)
+            },
+            PageSpecification::BlogPost { .. } => {
+                let filename = format!("{}.html", page_item.foundation.slug.as_ref().unwrap());
+                (&page_item.foundation, filename)
+            },
+        };
+        println!("Writing page to file: {}", filename);
+        fs::write(output_path.join(filename), page.content.as_ref().unwrap())
             .expect("Failed to write page to file");
-        }
+    }
         
         
         println!("Site generated!");

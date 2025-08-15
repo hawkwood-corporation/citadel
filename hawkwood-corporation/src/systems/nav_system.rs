@@ -19,7 +19,7 @@ impl Site {
         self.base_url.join(&item.path).unwrap()
     }
     
-    pub fn construct_nav_links(&self, nav_items: &[NavItem], page: &PageData) -> String {
+    pub fn construct_nav_links(&self, nav_items: &[NavItem], page: &PageFoundation) -> String {
 
         let current_slug = page.slug.as_deref().unwrap_or("/");
         
@@ -42,7 +42,7 @@ impl Site {
 
     }
     
-    pub fn construct_nav_wrapped_link(&self, nav_item: &NavWrappedItem, page: &PageData) -> String {
+    pub fn construct_nav_wrapped_link(&self, nav_item: &NavWrappedItem, page: &PageFoundation) -> String {
         
         let current_slug = page.slug.as_deref().unwrap_or("/");
         let is_current = self.is_current_page(&nav_item.path, current_slug);

@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-pub struct PageData {
+pub struct PageFoundation {
     pub title: String,
     pub slug: Option<String>,
     pub metadescription: Option<String>,
@@ -8,7 +8,7 @@ pub struct PageData {
     pub image: Option<String>,
 }
 
-impl Default for PageData {
+impl Default for PageFoundation {
     fn default() -> Self {
         Self {
             title: String::new(),
@@ -20,66 +20,66 @@ impl Default for PageData {
     }
 }
 
-pub enum Page {
-    PillarPage { page: PageData, pillar: Pillar },
-    BlogPost { page: PageData },
-}
-
 pub enum Pillar {
     Homepage,
-    //About,
-    //Services,
-    //Contact,
-    //Intelligence,
+    About,
+    Services,
+    Contact,
+    Intelligence,
 }
 
-pub trait AsPageData {
-    fn as_page_data(&self) -> &PageData;
-    fn as_page_data_mut(&mut self) -> &mut PageData;
+pub enum PageSpecification {
+    PillarPage(Pillar),
+    BlogPost {
+        date: Option<String>,
+        author: Option<String>,
+    },
 }
 
-impl AsPageData for Page {
-    fn as_page_data(&self) -> &PageData {
-        match self {
-            Page::PillarPage { page, ..  } => page,
-            Page::BlogPost { page, .. } => page,
-            // Page::ProductPage { page, .. } => page,
-        }
+pub struct Page {
+    pub foundation: PageFoundation,
+    pub specification: PageSpecification,
+}
+
+
+impl Page {
+    pub fn as_foundation(&self) -> &PageFoundation {
+        &self.foundation
     }
-    fn as_page_data_mut(&mut self) -> &mut PageData {
-        match self {
-            Page::PillarPage { page, ..  } => page,
-            Page::BlogPost { page, .. } => page,
-            // Page::ProductPage { page, .. } => page,
-        }
+    
+    pub fn as_foundation_mut(&mut self) -> &mut PageFoundation {
+        &mut self.foundation
     }
 }
 
 impl Site {
-    pub fn construct(&mut self, page_type: &mut Page) {
-        let page = match page_type {
-            Page::PillarPage { page, pillar } => { 
-                self.construct_pillar_page(page, pillar); 
-                page 
+    pub fn construct(&mut self, page: &mut Page) {
+        match &page.specification {
+            PageSpecification::PillarPage(pillar_type) => {
+                match pillar_type {
+                    Pillar::Homepage => self.construct_homepage(&mut page.foundation),
+                    Pillar::About => {
+                        // TODO: implement construct_about
+                    },
+                    Pillar::Services => {
+                        // TODO: implement construct_services
+                    },
+                    Pillar::Contact => {
+                        // TODO: implement construct_contact
+                    },
+                    Pillar::Intelligence => {
+                        // TODO: implement construct_intelligence
+                    },
+                }
             },
-            Page::BlogPost { page, .. } => { 
-                self.construct_blog_post(page); 
-                page 
+            PageSpecification::BlogPost { .. } => {
+                self.construct_blog_post(&mut page.foundation);
             },
-        };
+        }
         
-        clean_up_metadata(page);
+        clean_up_metadata(&mut page.foundation);
     }
     
-    pub fn construct_pillar_page(&mut self, page: &mut PageData, pillar: &Pillar) {
-        match pillar {
-            Pillar::Homepage => self.construct_homepage(page),
-            //Pillar::About => self.construct_about_content(page),
-            //Pillar::Services => self.construct_services_content(page),
-            //Pillar::Contact => self.construct_contact_content(page),
-            //Pillar::Intelligence => self.construct_intelligence_content(page),
-        }
-    }
 
     pub fn create_pages(&mut self) {
         
@@ -99,18 +99,22 @@ impl Site {
         
         
         let mut pages = vec![
-            Page::PillarPage {
-                pillar: Pillar::Homepage,
-                page: PageData { 
+            Page {
+                foundation: PageFoundation { 
                     title: "Homepage".to_owned(),
                     ..Default::default() 
-                } 
+                },
+                specification: PageSpecification::PillarPage(Pillar::Homepage),
             },
-            Page::BlogPost { 
-                page: PageData { 
+            Page {
+                foundation: PageFoundation { 
                     title: "My First Post".to_owned(),
                     ..Default::default()
-                } 
+                },
+                specification: PageSpecification::BlogPost {
+                    date: Some("2025-01-15".to_owned()),
+                    author: Some("Jake".to_owned()),
+                },
             },
         ];
         
@@ -121,5 +125,6 @@ impl Site {
         self.pages = pages;
         
     }
+
     
 }

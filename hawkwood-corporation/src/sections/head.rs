@@ -4,7 +4,7 @@ use crate::prelude::*;
 
 impl Site {
     
-    pub fn construct_head(&mut self, data: &mut PageData) -> String {
+    pub fn construct_head(&mut self, data: &mut PageFoundation) -> String {
         
         let title = &data.title;
         let metadescription = data.metadescription.as_deref().unwrap_or("");
@@ -12,35 +12,35 @@ impl Site {
         let content = format!(
             r####"
             
-            <head>
-                <title>{title}</title>
-                <meta name="description" content="{metadescription}">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                
-                <link rel="preconnect" href="https://fonts.googleapis.com">
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-                <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-                <style>
-                    [CSS_POSITION]
-                </style>
-                <!-- Google Analytics -->
-                <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
-                <script>
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){{dataLayer.push(arguments);}}
-                    gtag('js', new Date());
-                    gtag('config', 'GA_TRACKING_ID');
-                </script>
-                <!-- Page-specific tracking -->
+                <head>
+                    <title>{title}</title>
+                    <meta name="description" content="{metadescription}">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    
+                    <link rel="preconnect" href="https://fonts.googleapis.com">
+                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+                    <style>
+                        [CSS_POSITION]
+                    </style>
+                    <!-- Google Analytics -->
+                    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
+                    <script>
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){{dataLayer.push(arguments);}}
+                        gtag('js', new Date());
+                        gtag('config', 'GA_TRACKING_ID');
+                    </script>
+                    <!-- Page-specific tracking -->
 
-                <!-- Quicklink Page Preloading -->
-                <script defer src="https://cdn.jsdelivr.net/npm/quicklink@3.0.1/dist/quicklink.umd.js"></script>
-                <script>
-                    window.addEventListener('load', () => {{
-                        quicklink.listen();
-                        }});
-                </script>
-            </head>
+                    <!-- Quicklink Page Preloading -->
+                    <script defer src="https://cdn.jsdelivr.net/npm/quicklink@3.0.1/dist/quicklink.umd.js"></script>
+                    <script>
+                        window.addEventListener('load', () => {{
+                            quicklink.listen();
+                            }});
+                    </script>
+                </head>
             
             "####
             
@@ -49,8 +49,6 @@ impl Site {
         
         self.declare_css("foundation", "
         
-        {}
-
         
         * {
             margin: 0;
@@ -75,7 +73,7 @@ impl Site {
         
         
         self.declare_css("sovereign_colors", "
-        {}
+
         /* ===== SOVEREIGN COLORS ===== */
         
         :root {
@@ -146,8 +144,7 @@ impl Site {
         
         ");
         
-        
-        
+
         content
         
     }

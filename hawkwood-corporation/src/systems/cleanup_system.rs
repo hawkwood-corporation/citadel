@@ -2,7 +2,7 @@ use crate::prelude::*;
 use slugify::slugify;
 
 
-pub fn clean_up_metadata(page: &mut PageData) {
+pub fn clean_up_metadata(page: &mut PageFoundation) {
     if page.slug.is_none() {
         page.slug = Some(slugify!(&page.title))
     };
@@ -33,7 +33,7 @@ pub fn format_html(content: &mut String) {
         }
         
         // Add the line with current indentation
-        result.push_str(&"    ".repeat(indent));
+        result.push_str(&"  ".repeat(indent));
         result.push_str(trimmed);
         result.push('\n');
         
