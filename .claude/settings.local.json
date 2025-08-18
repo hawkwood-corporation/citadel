@@ -3,7 +3,6 @@
     "allow": [
       "Bash(cargo:*)"
     ],
-    "deny": [],
-    "defaultMode": "acceptEdits"
+    "deny": []
   }
 }

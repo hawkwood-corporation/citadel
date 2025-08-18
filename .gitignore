@@ -1,9 +1,10 @@
-/hawkwood-corporation/target/
+target/
 **/*.rs.bk
 /assets/
 /public/
 /unused/
+.claude/
 
 # Rust build artifacts
-target/
+/target/
 Cargo.lock
