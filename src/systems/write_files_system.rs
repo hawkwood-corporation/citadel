@@ -1,12 +1,8 @@
 use crate::prelude::*;
 use std::{fs, path::PathBuf};
 
-impl Site {
-    
+impl<T> Site<T> {
     pub fn write_files(&self) {
-        
-        // Create public folder
-        
         let mut output_path = PathBuf::from(".");
         output_path.push(&self.settings.output_folder);
         
@@ -17,27 +13,30 @@ impl Site {
         println!("Pages to generate: {}", &self.pages.len());
         
         for page_item in &self.pages {
-        let (page, filename) = match &page_item.specification {
-            PageSpecification::PillarPage(pillar_type) => {
-                let filename = match pillar_type {
-                    Pillar::Homepage => "index.html".to_owned(),
-                    _ => format!("{}.html", page_item.foundation.slug.as_ref().unwrap()),
-                };
-                (&page_item.foundation, filename)
-            },
-            PageSpecification::BlogPost { .. } => {
-                let filename = format!("{}.html", page_item.foundation.slug.as_ref().unwrap());
-                (&page_item.foundation, filename)
-            },
-        };
-        println!("Writing page to file: {}", filename);
-        fs::write(output_path.join(filename), page.content.as_ref().unwrap())
-            .expect("Failed to write page to file");
-    }
-        
+            let filename = get_filename(&page_item.foundation);
+            
+            println!("Writing page to file: {}", filename);
+            fs::write(
+                output_path.join(filename), 
+                page_item.foundation.content.as_ref().unwrap()
+            ).expect("Failed to write page to file");
+        }
         
         println!("Site generated!");
-        
+    }
+}
+
+fn get_filename(foundation: &PageFoundation) -> String {
+    if let Some(slug) = &foundation.slug {
+        if slug == "/" || slug.is_empty() {
+            return "index.html".to_owned();
+        }
     }
     
+    let title_lower = foundation.title.to_lowercase();
+    if title_lower == "homepage" || title_lower == "home" || title_lower == "home page" {
+        return "index.html".to_owned();
+    }
+    
+    format!("{}.html", foundation.slug.as_ref().unwrap_or(&foundation.title))
 }

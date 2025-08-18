@@ -9,7 +9,7 @@ pub struct Directive {
     pub class: Option<String>,
 }
 
-impl Site {
+impl<T> Site<T> {
     pub fn construct_directive_button(&mut self, directive: &Directive) -> String {
         
         self.declare_css("directive_button",

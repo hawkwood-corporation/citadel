@@ -13,7 +13,7 @@ pub struct NavWrappedItem {
 }
 
 
-impl Site {
+impl<T> Site<T> {
     
     pub fn construct_nav_url(&self, item: &NavItem) -> Url {
         self.base_url.join(&item.path).unwrap()

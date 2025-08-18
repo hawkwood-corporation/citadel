@@ -38,7 +38,7 @@ mod parts {
 }
 
 /*pub trait CitadelSite {
-    fn commence(&mut self, page: &mut Page);
+    fn commence(&mut self, page: &mut Page<T>);
     fn create_pages(&mut self);
     fn construct(&mut self)
 }*/

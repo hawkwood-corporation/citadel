@@ -1,18 +1,18 @@
 use crate::prelude::{css_system::Breakpoints, *};
-use std::{collections::HashMap, path::PathBuf/*, sync::Mutex*/};
+use std::{collections::HashMap, path::PathBuf, hash::Hash};
 
-pub struct Site {
+pub struct Site<T> {
     pub title: String,
     pub base_url: Url,
-    pub pages: Vec<Page>,
+    pub pages: Vec<Page<T>>,
     pub sections: Sections,
     pub css: HashMap<String, String>,
     pub breakpoints: Breakpoints,
     pub settings: Settings,
-    pub page_constructors: HashMap<PageSpecification, fn(&mut Site, &mut Page)>,
+    pub page_constructors: HashMap<T, fn(&mut Site<T>, &mut Page<T>)>,
 }
 
-impl Site {
+impl<T: Hash + Eq + Clone> Site<T> {
     pub fn example() -> Self {
         Self {
             title: "Example Site Title".to_owned(),

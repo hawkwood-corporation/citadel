@@ -2,8 +2,8 @@ use crate::prelude::*;
 
 #[allow(unused_variables)]
 
-impl Site {
-    pub fn construct_homepage(&mut self, page: &mut Page) {
+impl<T> Site<T> {
+    pub fn construct_homepage(&mut self, page: &mut Page<T>) {
         
         page.foundation.slug = Some("".to_owned());
 

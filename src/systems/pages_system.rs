@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use std::hash::Hash;
 
 pub struct PageFoundation {
     pub title: String,
@@ -20,30 +21,12 @@ impl Default for PageFoundation {
     }
 }
 
-#[derive(Hash, Eq, PartialEq, Clone)]
-pub enum Pillar {
-    Homepage,
-    About,
-    Services,
-    Contact,
-    Intelligence,
-}
-
-#[derive(Hash, Eq, PartialEq, Clone)]
-pub enum PageSpecification {
-    PillarPage(Pillar),
-    BlogPost {
-        date: Option<String>,
-        author: Option<String>,
-    },
-}
-
-pub struct Page {
+pub struct Page<T> {
     pub foundation: PageFoundation,
-    pub specification: PageSpecification,
+    pub specification: T,
 }
 
-impl Page {
+impl<T> Page<T> {
     pub fn as_foundation(&self) -> &PageFoundation {
         &self.foundation
     }
@@ -53,24 +36,24 @@ impl Page {
     }
 }
 
-impl Site {
-    pub fn construct(&mut self, page: &mut Page) {
-        if let Some(constructor_fn) = self.page_constructors.get(&page.specification) {
-            constructor_fn(self, page);
-        }
+pub trait PageConstructor<T> {
+    fn construct_page(&mut self, page: &mut Page<T>);
+}
+
+
+impl<T> Site<T> where Self: PageConstructor<T> {
+    pub fn construct(&mut self, page: &mut Page<T>) {
+        self.construct_page(page);
         clean_up_metadata(&mut page.foundation);
     }
     
     pub fn create_pages(&mut self) {
-        let constructors = self.page_constructors.clone();
+        let mut pages = std::mem::take(&mut self.pages);
         
-        for (page_spec, constructor_fn) in constructors {
-            let mut page = Page {
-                foundation: PageFoundation::default(),
-                specification: page_spec,
-            };
-            constructor_fn(self, &mut page);
-            self.pages.push(page);
+        for page in &mut pages {
+            self.construct(page);
         }
+        
+        self.pages = pages;
     }
 }

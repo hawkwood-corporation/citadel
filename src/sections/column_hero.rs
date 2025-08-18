@@ -2,7 +2,7 @@ use crate::prelude::*;
 
 #[allow(unused_variables)]
 
-impl Site {
+impl<T> Site<T> {
     pub fn construct_homepage_hero(&mut self) -> String {
         self.declare_css(
             "column_hero",

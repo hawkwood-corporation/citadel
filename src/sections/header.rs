@@ -2,8 +2,8 @@ use crate::prelude::*;
 
 #[allow(unused_variables)]
 
-impl Site {
-    pub fn construct_header(&mut self, page: &Page) -> String {
+impl<T> Site<T> {
+    pub fn construct_header(&mut self, page: &Page<T>) -> String {
         
         
         self.declare_css("header", r##"

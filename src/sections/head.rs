@@ -2,9 +2,9 @@ use crate::prelude::*;
 
 #[allow(unused_variables)]
 
-impl Site {
+impl<T> Site<T> {
     
-    pub fn construct_head(&mut self, page: &mut Page) -> String {
+    pub fn construct_head(&mut self, page: &mut Page<T>) -> String {
         
         let title = &page.foundation.title;
         let metadescription = page.foundation.metadescription.as_deref().unwrap_or("");
@@ -152,7 +152,7 @@ impl Site {
     
     
     
-    pub fn construct_schema(&self, page: &Page) -> String {
+    pub fn construct_schema(&self, page: &Page<T>) -> String {
     // Base organization schema for all pages
         let organization_schema = format!(r#"
             <script type="application/ld+json">

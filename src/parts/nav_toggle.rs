@@ -2,7 +2,7 @@ use crate::prelude::*;
 
 #[allow(unused_variables)]
 
-impl Site {
+impl<T> Site<T> {
     pub fn construct_nav_toggle(&mut self) -> (String, String) {
         self.declare_css(
             "nav_toggle",

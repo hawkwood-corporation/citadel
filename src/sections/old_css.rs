@@ -3,7 +3,7 @@ use crate::prelude::*;
 #[allow(dead_code)]
 #[allow(unused_variables)]
 
-impl Site {
+impl<T> Site<T> {
     
     pub fn construct_single_css(&self) -> String {
         

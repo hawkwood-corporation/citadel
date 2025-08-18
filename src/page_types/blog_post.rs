@@ -3,9 +3,9 @@ use crate::prelude::*;
 #[allow(dead_code)]
 #[allow(unused_variables)]
 
-impl Site {
+impl<T> Site<T> {
     
-    pub fn construct_blog_post(&self,  page: &mut Page) {
+    pub fn construct_blog_post(&self,  page: &mut Page<T>) {
         page.foundation.content = Some("Hehe".to_owned());
     }
 }
