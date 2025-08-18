@@ -15,8 +15,8 @@ pub struct Site<T> {
 impl<T: Hash + Eq + Clone> Site<T> {
     pub fn example() -> Self {
         Self {
-            title: "Example Site Title".to_owned(),
-            base_url: Url::parse("https://example.com/").expect("Invalid base URL"),
+            title: "Hawkwood Corporation".to_owned(),
+            base_url: Url::parse("https://hawkwoodcorporation.com/").expect("Invalid base URL"),
             pages: Vec::new(),
             sections: Sections::new(),
             css: HashMap::new(),

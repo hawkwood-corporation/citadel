@@ -9,12 +9,6 @@
  */
  
 pub mod prelude;
-mod sections {
-    pub mod head;
-    pub mod header;
-    pub mod old_css;
-    pub mod column_hero;
-}
 mod site;
 mod systems {
     pub mod nav_system;
@@ -26,19 +20,3 @@ mod systems {
     pub mod decree_system;
     pub mod assets_system;
 }
-
-mod page_types {
-    pub mod homepage;
-    pub mod blog_post;
-}
-
-mod parts {
-    pub mod nav_toggle;
-    pub mod directive_buttons;
-}
-
-/*pub trait CitadelSite {
-    fn commence(&mut self, page: &mut Page<T>);
-    fn create_pages(&mut self);
-    fn construct(&mut self)
-}*/

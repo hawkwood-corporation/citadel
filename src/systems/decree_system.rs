@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-impl<T> Site<T> where Self: PageConstructor<T> {
+impl<T: Hash + Eq + Clone> Site<T> {
     pub fn commence(&mut self) {
         self.construct_sections();
         self.create_pages();

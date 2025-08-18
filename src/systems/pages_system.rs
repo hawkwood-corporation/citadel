@@ -36,17 +36,40 @@ impl<T> Page<T> {
     }
 }
 
-pub trait PageConstructor<T> {
-    fn construct_page(&mut self, page: &mut Page<T>);
-}
-
-
-impl<T> Site<T> where Self: PageConstructor<T> {
+impl<T: Hash + Eq + Clone> Site<T> {
+    /// Data-oriented constructor registration
+    pub fn add_constructor(mut self, page_type: T, constructor: fn(&mut Site<T>, &mut Page<T>)) -> Self {
+        self.page_constructors.insert(page_type, constructor);
+        self
+    }
+    
+    /// Data-oriented page registration
+    pub fn add_pages(mut self, pages: Vec<Page<T>>) -> Self {
+        self.pages = pages;
+        self
+    }
+    
+    /// Internal constructor dispatch - match by discriminant for enum variants with data
     pub fn construct(&mut self, page: &mut Page<T>) {
-        self.construct_page(page);
+        // Find constructor by matching discriminant (enum variant type, ignoring data)
+        let found_constructor = self.page_constructors.iter()
+            .find_map(|(key, constructor)| {
+                if std::mem::discriminant(key) == std::mem::discriminant(&page.specification) {
+                    Some(*constructor)
+                } else {
+                    None
+                }
+            });
+        
+        if let Some(constructor) = found_constructor {
+            constructor(self, page);
+        } else {
+            eprintln!("Warning: No constructor found for page type");
+        }
         clean_up_metadata(&mut page.foundation);
     }
     
+    /// Data transformation through the registered constructors
     pub fn create_pages(&mut self) {
         let mut pages = std::mem::take(&mut self.pages);
         
