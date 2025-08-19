@@ -75,25 +75,6 @@ fn construct_blog_post(site: &mut Site<HawkwoodPages>, page: &mut Page<HawkwoodP
     }
 }
 
-/// -- Example of using traits to register constructors. This is not in use! --
-trait PageConstructor {
-    fn construct_matcher(&self, site: &mut Site<HawkwoodPages>, page: &mut Page<HawkwoodPages>);
-}
-
-use HawkwoodPages::*;
-
-impl PageConstructor for HawkwoodPages {
-    fn construct_matcher(&self, site: &mut Site<HawkwoodPages>, page: &mut Page<HawkwoodPages>) {
-        match self {
-            Homepage => construct_homepage(site, page),
-            Intelligence => construct_intelligence(site, page),
-            About => construct_about(site, page),
-            BlogPost { .. } => construct_blog_post(site, page),
-        }
-    }
-}
-// -- End of example --
-
 
 fn main() {
     let pages = vec![
@@ -140,16 +121,6 @@ fn main() {
         },
     ];
     
-    
-    
-    /*Site::example()
-        .add_constructor(HawkwoodPages::Homepage, construct_homepage)
-        .add_constructor(HawkwoodPages::Intelligence, construct_intelligence)
-        .add_constructor(HawkwoodPages::About, construct_about)
-        .add_constructor(HawkwoodPages::BlogPost { date: None, author: None }, construct_blog_post)
-        .add_pages(pages)
-        .commence();*/
-        
     use HawkwoodPages::*;
         
     Site::example()
@@ -161,3 +132,32 @@ fn main() {
         .commence();
 
 }
+
+
+
+
+
+
+
+// -- Example: Manual trait-based constructor routing --
+// This shows how to bypass Citadel's HashMap registration system
+// and implement your own constructor dispatch if needed.
+// Most users should prefer the .add_constructor() approach above.
+
+trait PageConstructor<T> {
+    fn construct_matcher(&self, site: &mut Site<T>, page: &mut Page<T>);
+}
+
+use HawkwoodPages::*;
+
+impl PageConstructor<HawkwoodPages> for HawkwoodPages {
+    fn construct_matcher(&self, site: &mut Site<HawkwoodPages>, page: &mut Page<HawkwoodPages>) {
+        match self {
+            Homepage => construct_homepage(site, page),
+            Intelligence => construct_intelligence(site, page),
+            About => construct_about(site, page),
+            BlogPost { .. } => construct_blog_post(site, page),
+        }
+    }
+}
+// -- End example --
