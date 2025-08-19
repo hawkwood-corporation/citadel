@@ -19,4 +19,5 @@ mod systems {
     pub mod css_system;
     pub mod decree_system;
     pub mod assets_system;
+    pub mod head_system;
 }

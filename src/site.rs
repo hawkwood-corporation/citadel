@@ -10,6 +10,7 @@ pub struct Site<T> {
     pub breakpoints: Breakpoints,
     pub settings: Settings,
     pub page_constructors: HashMap<T, fn(&mut Site<T>, &mut Page<T>)>,
+    pub head_constructor: Option<fn(&mut Site<T>, &Page<T>) -> String>,
 }
 
 impl<T: Hash + Eq + Clone> Site<T> {
@@ -27,6 +28,7 @@ impl<T: Hash + Eq + Clone> Site<T> {
                 output_folder: PathBuf::from("public"),
             },
             page_constructors: HashMap::new(),
+            head_constructor: None,
         }
     }
 }

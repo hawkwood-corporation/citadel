@@ -13,25 +13,56 @@ enum HawkwoodPages {
 
 // Simple test constructors
 fn construct_homepage(site: &mut Site<HawkwoodPages>, page: &mut Page<HawkwoodPages>) {
-    site.declare_css("homepage", "body { background: #terracotta; }");
     page.foundation.slug = Some("".to_owned());
-    page.foundation.content = Some("<h1>Hawkwood Corporation</h1><p>Strategic revenue engineering test page.</p>".to_owned());
+    
+    let head = site.construct_head(page);  // ← This calls your fallback!
+    
+    let html = format!(r##"
+        <!DOCTYPE html>
+        <html lang="en-US">
+        {head}
+        <body>
+            <h1>Hawkwood Corporation</h1>
+            <p>Strategic revenue engineering test page.</p>
+        </body>
+        </html>
+    "##);
+    
+    page.foundation.content = Some(html);
 }
 
 fn construct_intelligence(site: &mut Site<HawkwoodPages>, page: &mut Page<HawkwoodPages>) {
-    site.declare_css("intelligence", ".intelligence { background: #terracotta; }");
+    site.declare_css("intelligence", r##"
+    
+        .intelligence {
+            background: #B7472A;
+        }
+        
+    "##);
     page.foundation.slug = Some("intelligence".to_owned());
     page.foundation.content = Some("<h1>Market Intelligence Division</h1><p>Test intelligence page.</p>".to_owned());
 }
 
 fn construct_about(site: &mut Site<HawkwoodPages>, page: &mut Page<HawkwoodPages>) {
-    site.declare_css("about", ".about { background: #terracotta; }");
+    site.declare_css("about", r##"
+    
+        .about {
+            background: #B7472A;
+        }
+    
+    "##);
     page.foundation.slug = Some("about".to_owned());
     page.foundation.content = Some("<h1>About Hawkwood</h1><p>Test about page.</p>".to_owned());
 }
 
 fn construct_blog_post(site: &mut Site<HawkwoodPages>, page: &mut Page<HawkwoodPages>) {
-    site.declare_css("blog", ".blog { background: #terracotta; }");
+    site.declare_css("blog-post", r##"
+    
+        .blog-post {
+            background: #B7472A;
+        }
+    
+    "##);
     // Access the blog post data from the specification
     if let HawkwoodPages::BlogPost { date, author } = &page.specification {
         let date_str = date.as_deref().unwrap_or("Unknown date");
