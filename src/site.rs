@@ -31,6 +31,24 @@ impl<T: Hash + Eq + Clone> Site<T> {
             head_constructor: None,
         }
     }
+    
+    pub fn new(title: String, base_url: Url) -> Self {
+        Self {
+            title,
+            base_url,
+            pages: Vec::new(),
+            sections: Sections::new(),
+            css: HashMap::new(),
+            breakpoints: Breakpoints {
+                mobile: "1000px".to_owned(), 
+            },
+            settings: Settings {
+                output_folder: PathBuf::from("public"),
+            },
+            page_constructors: HashMap::new(),
+            head_constructor: None,
+        }
+    }
 }
 
 pub struct Settings {

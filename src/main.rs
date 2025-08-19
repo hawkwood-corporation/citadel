@@ -75,6 +75,26 @@ fn construct_blog_post(site: &mut Site<HawkwoodPages>, page: &mut Page<HawkwoodP
     }
 }
 
+/// -- Example of using traits to register constructors. This is not in use! --
+trait PageConstructor {
+    fn construct_matcher(&self, site: &mut Site<HawkwoodPages>, page: &mut Page<HawkwoodPages>);
+}
+
+use HawkwoodPages::*;
+
+impl PageConstructor for HawkwoodPages {
+    fn construct_matcher(&self, site: &mut Site<HawkwoodPages>, page: &mut Page<HawkwoodPages>) {
+        match self {
+            Homepage => construct_homepage(site, page),
+            Intelligence => construct_intelligence(site, page),
+            About => construct_about(site, page),
+            BlogPost { .. } => construct_blog_post(site, page),
+        }
+    }
+}
+// -- End of example --
+
+
 fn main() {
     let pages = vec![
         Page {
@@ -120,11 +140,24 @@ fn main() {
         },
     ];
     
-    Site::example()
+    
+    
+    /*Site::example()
         .add_constructor(HawkwoodPages::Homepage, construct_homepage)
         .add_constructor(HawkwoodPages::Intelligence, construct_intelligence)
         .add_constructor(HawkwoodPages::About, construct_about)
         .add_constructor(HawkwoodPages::BlogPost { date: None, author: None }, construct_blog_post)
         .add_pages(pages)
+        .commence();*/
+        
+    use HawkwoodPages::*;
+        
+    Site::example()
+        .add_constructor(Homepage, construct_homepage)
+        .add_constructor(Intelligence, construct_intelligence)
+        .add_constructor(About, construct_about)
+        .add_constructor(BlogPost { date: None, author: None }, construct_blog_post)
+        .add_pages(pages)
         .commence();
+
 }
