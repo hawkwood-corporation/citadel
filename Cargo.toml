@@ -2,6 +2,10 @@
 name = "citadel"
 version = "0.1.0"
 edition = "2024"
+description = "Sovereign static site platform built with Rust"
+license = "SEE LICENSE FILE"
+repository = "https://github.com/HawkwoodCorporation/citadel"
+homepage = "https://github.com/HawkwoodCorporation/citadel"
 
 [dependencies]
 slugify = "0.1.0"
