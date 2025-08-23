@@ -1,27 +1,27 @@
 use crate::prelude::*;
 
 impl<T: Hash + Eq + Clone> Site<T> {
-    pub fn add_head_constructor(mut self, head_fn: fn(&mut Site<T>, &Page<T>) -> String) -> Self {
+    
+    // Default head constructor - just registers for all pages to get SEO basics
+    pub fn add_head_constructor(mut self) -> Self {
+        self.head_constructor = Some(|site, page| site.construct_citadel_head(page, None));
+        self
+    }
+    
+    // Custom head constructor - registers custom function for all pages
+    pub fn add_head_constructor_with(mut self, head_fn: fn(&mut Site<T>, &Page<T>) -> String) -> Self {
         self.head_constructor = Some(head_fn);
         self
     }
     
-    pub fn construct_head(&mut self, page: &Page<T>) -> String {
-        if let Some(head_fn) = self.head_constructor {
-            head_fn(self, page)
-        } else {
-            self.seo_basics_head(page)  // Default fallback
-        }
-    }
-    
-    
-
-    pub fn seo_basics_head(&mut self, page: &Page<T>) -> String {
+    // The sovereign method - SEO basics + optional custom additions
+    pub fn construct_citadel_head(&mut self, page: &Page<T>, additional_head_code: Option<&str>) -> String {
         let title = &page.foundation.title;
         let metadescription = page.foundation.metadescription.as_deref().unwrap_or("");
+        let additional_head_code = additional_head_code.unwrap_or("");
         
         // Rest of your existing logic stays the same!
-        let content = format!(r####"
+        format!(r##"
             <head>
                 <title>{title}</title>
                 <meta name="description" content="{metadescription}">
@@ -48,18 +48,31 @@ impl<T: Hash + Eq + Clone> Site<T> {
                         quicklink.listen();
                         }});
                 </script>
+                {additional_head_code}
             </head>
-        "####);
-        
-        // Keep all your CSS declarations
-        self.declare_css("foundation", "
-        
-        /* Foundation */
-        
-        
-        ");
-        // etc.
-        
-        content
+        "##)
+    }
+    
+    // For registered head constructors (site-wide consistency)
+    pub fn construct_head(&mut self, page: &Page<T>) -> String {
+        if let Some(head_fn) = self.head_constructor {
+            head_fn(self, page)  // ← Calls whatever was registered
+        } else {
+            // Default fallback - just Citadel basics with no additions
+            self.construct_citadel_head(page, None)
+        }
+    }
+    
+    // Registered head strategy PLUS additional custom code for this specific page
+    pub fn construct_head_with(&mut self, page: &Page<T>, additional_head_code: &str) -> String {
+        if let Some(head_fn) = self.head_constructor {
+            // Get the registered head and inject the additional code
+            let registered_head = head_fn(self, page);
+            // Insert the additional code before the closing </head> tag
+            registered_head.replace("</head>", &format!("{}\n            </head>", additional_head_code))
+        } else {
+            // No registered strategy, so use Citadel head with the additional code
+            self.construct_citadel_head(page, None)
+        }
     }
 }

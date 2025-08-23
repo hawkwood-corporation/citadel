@@ -15,7 +15,7 @@ enum HawkwoodPages {
 fn construct_homepage(site: &mut Site<HawkwoodPages>, page: &mut Page<HawkwoodPages>) {
     page.foundation.slug = Some("".to_owned());
     
-    let head = site.construct_head(page);  // ← This calls your fallback!
+    let head = site.construct_head(page);
     
     let html = format!(r##"
         <!DOCTYPE html>
@@ -128,6 +128,8 @@ fn main() {
         .add_constructor(Intelligence, construct_intelligence)
         .add_constructor(About, construct_about)
         .add_constructor(BlogPost { date: None, author: None }, construct_blog_post)
+        .add_head_constructor()
+        //.add_head_constructor_with(custom_code)
         .add_pages(pages)
         .commence();
 
