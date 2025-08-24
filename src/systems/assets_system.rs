@@ -91,9 +91,13 @@ fn copy_dir_recursive(src: &PathBuf, dst: &PathBuf) -> std::io::Result<()> {
             // Recursively copy subdirectories
             copy_dir_recursive(&src_path, &dst_path)?;
         } else {
-            // Copy files
-            fs::copy(&src_path, &dst_path)?;
-            println!("Copied: {:?} -> {:?}", src_path, dst_path);
+            // Copy files only if they don't exist or are newer
+            if should_copy_file(&src_path, &dst_path)? {
+                fs::copy(&src_path, &dst_path)?;
+                println!("Copied: {:?} -> {:?}", src_path, dst_path);
+            } else {
+                println!("Skipped (up to date): {:?}", src_path);
+            }
         }
     }
     
