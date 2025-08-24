@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use std::{fs, path::PathBuf};
 
-impl<T> Site<T> {
+impl<T, I> Site<T, I> {
     pub fn write_files(&self) {
         let mut output_path = PathBuf::from(".");
         output_path.push(&self.settings.output_folder);

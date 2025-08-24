@@ -12,7 +12,7 @@ enum HawkwoodPages {
 }
 
 // Simple test constructors
-fn construct_homepage(site: &mut Site<HawkwoodPages>, page: &mut Page<HawkwoodPages>) {
+fn construct_homepage(site: &mut Site<HawkwoodPages, ()>, page: &mut Page<HawkwoodPages>) {
     page.foundation.slug = Some("".to_owned());
     
     let head = site.construct_head(page);
@@ -31,7 +31,7 @@ fn construct_homepage(site: &mut Site<HawkwoodPages>, page: &mut Page<HawkwoodPa
     page.foundation.content = Some(html);
 }
 
-fn construct_intelligence(site: &mut Site<HawkwoodPages>, page: &mut Page<HawkwoodPages>) {
+fn construct_intelligence(site: &mut Site<HawkwoodPages, ()>, page: &mut Page<HawkwoodPages>) {
     site.declare_css("intelligence", r##"
     
         .intelligence {
@@ -43,7 +43,7 @@ fn construct_intelligence(site: &mut Site<HawkwoodPages>, page: &mut Page<Hawkwo
     page.foundation.content = Some("<h1>Market Intelligence Division</h1><p>Test intelligence page.</p>".to_owned());
 }
 
-fn construct_about(site: &mut Site<HawkwoodPages>, page: &mut Page<HawkwoodPages>) {
+fn construct_about(site: &mut Site<HawkwoodPages, ()>, page: &mut Page<HawkwoodPages>) {
     site.declare_css("about", r##"
     
         .about {
@@ -55,7 +55,7 @@ fn construct_about(site: &mut Site<HawkwoodPages>, page: &mut Page<HawkwoodPages
     page.foundation.content = Some("<h1>About Hawkwood</h1><p>Test about page.</p>".to_owned());
 }
 
-fn construct_blog_post(site: &mut Site<HawkwoodPages>, page: &mut Page<HawkwoodPages>) {
+fn construct_blog_post(site: &mut Site<HawkwoodPages, ()>, page: &mut Page<HawkwoodPages>) {
     site.declare_css("blog-post", r##"
     
         .blog-post {
@@ -123,7 +123,7 @@ fn main() {
     
     use HawkwoodPages::*;
         
-    Site::example()
+    Site::example(())
         .add_constructor(Homepage, construct_homepage)
         .add_constructor(Intelligence, construct_intelligence)
         .add_constructor(About, construct_about)
@@ -146,14 +146,14 @@ fn main() {
 // and implement your own constructor dispatch if needed.
 // Most users should prefer the .add_constructor() approach above.
 
-trait PageConstructor<T> {
-    fn construct_matcher(&self, site: &mut Site<T>, page: &mut Page<T>);
+trait PageConstructor<T, I> {
+    fn construct_matcher(&self, site: &mut Site<T, I>, page: &mut Page<T>);
 }
 
 use HawkwoodPages::*;
 
-impl PageConstructor<HawkwoodPages> for HawkwoodPages {
-    fn construct_matcher(&self, site: &mut Site<HawkwoodPages>, page: &mut Page<HawkwoodPages>) {
+impl PageConstructor<HawkwoodPages, ()> for HawkwoodPages {
+    fn construct_matcher(&self, site: &mut Site<HawkwoodPages, ()>, page: &mut Page<HawkwoodPages>) {
         match self {
             Homepage => construct_homepage(site, page),
             Intelligence => construct_intelligence(site, page),

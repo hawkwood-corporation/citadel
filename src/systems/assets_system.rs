@@ -2,7 +2,7 @@
 use crate::prelude::*;
 use std::{fs, path::PathBuf};
 
-impl<T> Site<T> {
+impl<T, I> Site<T, I> {
     
     pub fn copy_assets(&self) {
         let assets_path = PathBuf::from("./assets");

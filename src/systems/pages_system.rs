@@ -36,9 +36,9 @@ impl<T> Page<T> {
     }
 }
 
-impl<T: Hash + Eq + Clone> Site<T> {
+impl<T: Hash + Eq + Clone, I> Site<T, I> {
     /// Data-oriented constructor registration
-    pub fn add_constructor(mut self, page_type: T, constructor: fn(&mut Site<T>, &mut Page<T>)) -> Self {
+    pub fn add_constructor(mut self, page_type: T, constructor: fn(&mut Site<T, I>, &mut Page<T>)) -> Self {
         self.page_constructors.insert(page_type, constructor);
         self
     }

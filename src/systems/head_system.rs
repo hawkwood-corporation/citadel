@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-impl<T: Hash + Eq + Clone> Site<T> {
+impl<T: Hash + Eq + Clone, I> Site<T, I> {
     
     // Default head constructor - just registers for all pages to get SEO basics
     pub fn add_head_constructor(mut self) -> Self {
@@ -9,7 +9,7 @@ impl<T: Hash + Eq + Clone> Site<T> {
     }
     
     // Custom head constructor - registers custom function for all pages
-    pub fn add_head_constructor_with(mut self, head_fn: fn(&mut Site<T>, &Page<T>) -> String) -> Self {
+    pub fn add_head_constructor_with(mut self, head_fn: fn(&mut Site<T, I>, &Page<T>) -> String) -> Self {
         self.head_constructor = Some(head_fn);
         self
     }

@@ -4,7 +4,7 @@ pub struct Breakpoints {
     pub mobile: String,
 }
 
-impl<T> Site<T> {
+impl<T, I> Site<T, I> {
     pub fn declare_css(&mut self, key: &str, css: &str) {
         let css = css.replace("{}", "");
         if !self.css.contains_key(key) {

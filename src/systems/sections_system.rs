@@ -20,7 +20,7 @@ impl Sections {
     }
 }
 
-impl<T> Site<T> {
+impl<T, I> Site<T, I> {
     pub fn construct_sections(&mut self) {
         // Clean, focused section creation
         self.sections.main_wrap_open = r####"
