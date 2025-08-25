@@ -37,7 +37,7 @@ impl<T> Page<T> {
 }
 
 impl<T: Hash + Eq + Clone, I> Site<T, I> {
-    /// Data-oriented constructor registration
+    /// Data-oriented constructor registration - now with smart enum handling!
     pub fn add_constructor(mut self, page_type: T, constructor: fn(&mut Site<T, I>, &mut Page<T>)) -> Self {
         self.page_constructors.insert(page_type, constructor);
         self
@@ -49,9 +49,16 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
         self
     }
     
-    /// Internal constructor dispatch - match by discriminant for enum variants with data
+    /// Smart constructor dispatch - handles both specific variants and enum patterns
     pub fn construct(&mut self, page: &mut Page<T>) {
-        // Find constructor by matching discriminant (enum variant type, ignoring data)
+        // First: Try exact match (specific variant)
+        if let Some(&constructor) = self.page_constructors.get(&page.specification) {
+            constructor(self, page);
+            clean_up_metadata(&mut page.foundation);
+            return;
+        }
+        
+        // Second: Try discriminant match (enum parent pattern)
         let found_constructor = self.page_constructors.iter()
             .find_map(|(key, constructor)| {
                 if std::mem::discriminant(key) == std::mem::discriminant(&page.specification) {
@@ -66,6 +73,7 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
         } else {
             eprintln!("Warning: No constructor found for page type");
         }
+        
         clean_up_metadata(&mut page.foundation);
     }
     
