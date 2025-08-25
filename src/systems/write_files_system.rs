@@ -14,10 +14,17 @@ impl<T, I> Site<T, I> {
         
         for page_item in &self.pages {
             let filename = get_filename(&page_item.foundation);
+            let file_path = output_path.join(&filename);
+            
+            // Create parent directory if it doesn't exist
+            if let Some(parent) = file_path.parent() {
+                fs::create_dir_all(parent)
+                    .expect("Failed to create page directory");
+            }
             
             println!("Writing page to file: {}", filename);
             fs::write(
-                output_path.join(filename), 
+                file_path, 
                 page_item.foundation.content.as_ref().unwrap()
             ).expect("Failed to write page to file");
         }
@@ -31,6 +38,8 @@ fn get_filename(foundation: &PageFoundation) -> String {
         if slug == "/" || slug.is_empty() {
             return "index.html".to_owned();
         }
+        // Create folder structure for clean URLs
+        return format!("{}/index.html", slug);
     }
     
     let title_lower = foundation.title.to_lowercase();
@@ -38,5 +47,6 @@ fn get_filename(foundation: &PageFoundation) -> String {
         return "index.html".to_owned();
     }
     
-    format!("{}.html", foundation.slug.as_ref().unwrap_or(&foundation.title))
+    let slug = foundation.slug.as_ref().unwrap_or(&foundation.title);
+    format!("{}/index.html", slug)
 }
