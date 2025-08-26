@@ -4,7 +4,7 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
     
     // Default head constructor - just registers for all pages to get SEO basics
     pub fn add_head_constructor(mut self) -> Self {
-        self.head_constructor = Some(|site, page| site.construct_citadel_head(page, None));
+        self.head_constructor = Some(|site, page| site.construct_citadel_head(page));
         self
     }
     
@@ -14,8 +14,34 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
         self
     }
     
+    pub fn construct_citadel_head(&mut self, page: &Page<T>) -> String {
+        let title = &page.foundation.title;
+        let metadescription = page.foundation.metadescription.as_deref().unwrap_or("");
+        
+        format!(r##"
+            <head>
+                <title>{title}</title>
+                <meta name="description" content="{metadescription}">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                
+                {fonts_position}
+                
+                <style>
+                    [CSS_POSITION]
+                </style>
+                
+                {analytics_position}
+                {head_bottom_position}
+            </head>
+        "##, 
+            fonts_position = self.placements.fonts_position,
+            analytics_position = self.placements.analytics_position,
+            head_bottom_position = self.placements.head_bottom_position,
+        )
+    }
+    
     // The sovereign method - SEO basics + optional custom additions
-    pub fn construct_citadel_head(&mut self, page: &Page<T>, additional_head_code: Option<&str>) -> String {
+    pub fn construct_defunct_citadel_head(&mut self, page: &Page<T>, additional_head_code: Option<&str>) -> String {
         let title = &page.foundation.title;
         let metadescription = page.foundation.metadescription.as_deref().unwrap_or("");
         let additional_head_code = additional_head_code.unwrap_or("");
@@ -59,7 +85,7 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
             head_fn(self, page)  // ← Calls whatever was registered
         } else {
             // Default fallback - just Citadel basics with no additions
-            self.construct_citadel_head(page, None)
+            self.construct_citadel_head(page)
         }
     }
     
@@ -72,7 +98,7 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
             registered_head.replace("</head>", &format!("{}\n            </head>", additional_head_code))
         } else {
             // No registered strategy, so use Citadel head with the additional code
-            self.construct_citadel_head(page, None)
+            self.construct_citadel_head(page)
         }
     }
 }

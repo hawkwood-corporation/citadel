@@ -20,4 +20,5 @@ mod systems {
     pub mod decree_system;
     pub mod assets_system;
     pub mod head_system;
+    pub mod placements_system;
 }

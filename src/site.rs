@@ -7,6 +7,7 @@ pub struct Site<T, I = ()> {
     pub pages: Vec<Page<T>>,
     pub sections: Sections,
     pub css: HashMap<String, String>,
+    pub placements: Placements,
     pub breakpoints: Breakpoints,
     pub settings: Settings,
     pub imperium: I,
@@ -22,6 +23,7 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
             pages: Vec::new(),
             sections: Sections::new(),
             css: HashMap::new(),
+            placements: Placements::new(),
             breakpoints: Breakpoints {
                 mobile: "1000px".to_owned(), 
             },
@@ -44,6 +46,7 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
             breakpoints: Breakpoints {
                 mobile: "1000px".to_owned(), 
             },
+            placements: Placements::new(),
             settings: Settings {
                 output_folder: PathBuf::from("public"),
             },

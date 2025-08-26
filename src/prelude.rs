@@ -16,6 +16,7 @@ pub use crate::systems::{
     sections_system::*,
     cleanup_system::*,
     head_system::*,
+    placements_system::*,
 };
 
 pub use url::Url;
