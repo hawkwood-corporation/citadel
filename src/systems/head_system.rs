@@ -26,15 +26,22 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
                 
                 {fonts_position}
                 
+                {head_top_position}
+                
+                {schema_position}
+                
                 <style>
                     [CSS_POSITION]
                 </style>
                 
                 {analytics_position}
+                
                 {head_bottom_position}
             </head>
         "##, 
             fonts_position = self.placements.fonts_position,
+            head_top_position = self.placements.head_top_position,
+            schema_position = self.placements.schema_position,
             analytics_position = self.placements.analytics_position,
             head_bottom_position = self.placements.head_bottom_position,
         )

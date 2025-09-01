@@ -5,7 +5,13 @@ pub struct Placements {
     /// Font loading and preconnect links
     pub fonts_position: String,
     
-    /// Additional head content (schema markup, meta tags, etc.)
+    /// Schema markup and structured data
+    pub schema_position: String,
+    
+    /// Content at the top of head (after meta tags)
+    pub head_top_position: String,
+    
+    /// Additional head content at bottom (before closing head tag)
     pub head_bottom_position: String,
     
     /// Content that needs to be at the very top of <body>
@@ -22,6 +28,8 @@ impl Default for Placements {
     fn default() -> Self {
         Self {
             fonts_position: String::new(),
+            schema_position: String::new(),
+            head_top_position: String::new(),
             head_bottom_position: String::new(),
             body_top_position: String::new(),
             analytics_position: String::new(),
@@ -44,8 +52,24 @@ impl Placements {
         self.fonts_position.push_str(fonts);
     }
     
+    /// Add schema markup content
+    pub fn add_schema(&mut self, content: &str) {
+        if !self.schema_position.is_empty() {
+            self.schema_position.push('\n');
+        }
+        self.schema_position.push_str(content);
+    }
+    
     /// Add content to head top position
     pub fn add_head_top(&mut self, content: &str) {
+        if !self.head_top_position.is_empty() {
+            self.head_top_position.push('\n');
+        }
+        self.head_top_position.push_str(content);
+    }
+    
+    /// Add content to head bottom position
+    pub fn add_head_bottom(&mut self, content: &str) {
         if !self.head_bottom_position.is_empty() {
             self.head_bottom_position.push('\n');
         }
@@ -82,7 +106,9 @@ impl<T, I> Site<T, I> {
     pub fn declare_placement(&mut self, position: PlacementPosition, content: &str) {
         match position {
             PlacementPosition::Fonts => self.placements.add_fonts(content),
+            PlacementPosition::Schema => self.placements.add_schema(content),
             PlacementPosition::HeadTop => self.placements.add_head_top(content),
+            PlacementPosition::HeadBottom => self.placements.add_head_bottom(content),
             PlacementPosition::BodyTop => self.placements.add_body_top(content),
             PlacementPosition::Analytics => self.placements.add_analytics(content),
             PlacementPosition::BodyBottom => self.placements.add_body_bottom(content),
@@ -94,7 +120,9 @@ impl<T, I> Site<T, I> {
 #[derive(Debug, Clone, Copy)]
 pub enum PlacementPosition {
     Fonts,
+    Schema,
     HeadTop,
+    HeadBottom,
     BodyTop,
     Analytics,
     BodyBottom,
