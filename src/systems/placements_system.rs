@@ -20,6 +20,9 @@ pub struct Placements {
     /// Analytics and tracking scripts
     pub analytics_position: String,
     
+    /// Additional scripts before closing </body> tag
+    pub scripts_position: String,
+    
     /// Content before closing </body> tag
     pub body_bottom_position: String,
 }
@@ -33,6 +36,7 @@ impl Default for Placements {
             head_bottom_position: String::new(),
             body_top_position: String::new(),
             analytics_position: String::new(),
+            scripts_position: String::new(),
             body_bottom_position: String::new(),
         }
     }
@@ -92,6 +96,13 @@ impl Placements {
         self.analytics_position.push_str(content);
     }
     
+    pub fn add_scripts(&mut self, content: &str) {
+        if !self.scripts_position.is_empty() {
+            self.scripts_position.push('\n');
+        }
+        self.scripts_position.push_str(content);
+    }
+    
     /// Add content to body bottom position
     pub fn add_body_bottom(&mut self, content: &str) {
         if !self.body_bottom_position.is_empty() {
@@ -111,7 +122,34 @@ impl<T, I> Site<T, I> {
             PlacementPosition::HeadBottom => self.placements.add_head_bottom(content),
             PlacementPosition::BodyTop => self.placements.add_body_top(content),
             PlacementPosition::Analytics => self.placements.add_analytics(content),
+            PlacementPosition::Scripts => self.placements.add_scripts(content),
             PlacementPosition::BodyBottom => self.placements.add_body_bottom(content),
+        }
+    }
+    
+    pub fn combine_placements(&self, site_content: &str, page_content: &str) -> String {
+        match (site_content.is_empty(), page_content.is_empty()) {
+            (true, true) => String::new(),
+            (false, true) => site_content.to_owned(),
+            (true, false) => page_content.to_owned(),
+            (false, false) => format!("{}\n{}", site_content, page_content),
+        }
+    }
+
+}
+
+impl<T> Page<T> {
+    /// Declare placement content for this specific page
+    pub fn declare_placement(&mut self, position: PlacementPosition, content: &str) {
+        match position {
+            PlacementPosition::Fonts => self.foundation.placements.add_fonts(content),
+            PlacementPosition::Schema => self.foundation.placements.add_schema(content),
+            PlacementPosition::HeadTop => self.foundation.placements.add_head_top(content),
+            PlacementPosition::HeadBottom => self.foundation.placements.add_head_bottom(content),
+            PlacementPosition::BodyTop => self.foundation.placements.add_body_top(content),
+            PlacementPosition::Analytics => self.foundation.placements.add_analytics(content),
+            PlacementPosition::Scripts => self.foundation.placements.add_scripts(content),
+            PlacementPosition::BodyBottom => self.foundation.placements.add_body_bottom(content),
         }
     }
 }
@@ -125,5 +163,7 @@ pub enum PlacementPosition {
     HeadBottom,
     BodyTop,
     Analytics,
+    Scripts,
     BodyBottom,
 }
+

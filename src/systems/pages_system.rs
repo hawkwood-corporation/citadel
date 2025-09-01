@@ -7,6 +7,7 @@ pub struct PageFoundation {
     pub metadescription: Option<String>,
     pub content: Option<String>,
     pub image: Option<String>,
+    pub placements: Placements,
 }
 
 impl Default for PageFoundation {
@@ -17,6 +18,7 @@ impl Default for PageFoundation {
             metadescription: None,
             content: None,
             image: None,
+            placements: Placements::new(),
         }
     }
 }

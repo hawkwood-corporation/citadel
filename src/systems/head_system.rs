@@ -18,11 +18,69 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
         let title = &page.foundation.title;
         let metadescription = page.foundation.metadescription.as_deref().unwrap_or("");
         
+        let (metadescription_tag, og_description, twitter_description) = if metadescription.is_empty() {
+            (String::new(), String::new(), String::new())
+        } else {
+            (format!(r#"<meta name="description" content="{metadescription}">"#),
+            format!(r#"<meta property="og:description" content="{metadescription}">"#),
+            format!(r#"<meta name="twitter:description" content="{metadescription}">"#))
+        };
+        
+        let page_url = if let Some(slug) = &page.foundation.slug {
+            if slug.is_empty() || slug == "/" {
+                self.base_url.to_string().trim_end_matches('/').to_string()
+            } else {
+                self.base_url.join(slug).unwrap().to_string()
+            }
+        } else {
+            self.base_url.to_string().trim_end_matches('/').to_string()
+        };
+        
+        let fonts_position = self.combine_placements(
+            &self.placements.fonts_position,
+            &page.foundation.placements.fonts_position
+        );
+        
+        let head_top_position = self.combine_placements(
+            &self.placements.head_top_position,
+            &page.foundation.placements.head_top_position
+        );
+        
+        let schema_position = self.combine_placements(
+            &self.placements.schema_position,
+            &page.foundation.placements.schema_position
+        );
+        
+        let analytics_position = self.combine_placements(
+            &self.placements.analytics_position,
+            &page.foundation.placements.analytics_position
+        );
+        
+        let head_bottom_position = self.combine_placements(
+            &self.placements.head_bottom_position,
+            &page.foundation.placements.head_bottom_position
+        );
+        
+        let scripts_position = self.combine_placements(
+            &self.placements.scripts_position,
+            &page.foundation.placements.scripts_position
+        );
+        
         format!(r##"
             <head>
+                <meta charset="UTF-8">
                 <title>{title}</title>
-                <meta name="description" content="{metadescription}">
+                {metadescription_tag}
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link rel="canonical" href="{page_url}">
+                
+                <meta property="og:title" content="{title}">
+                {og_description}
+                <meta property="og:url" content="{page_url}">
+                <meta property="og:type" content="website">
+                
+                <meta name="twitter:title" content="{title}">
+                {twitter_description}
                 
                 {fonts_position}
                 
@@ -36,15 +94,11 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
                 
                 {analytics_position}
                 
+                {scripts_position}
+                
                 {head_bottom_position}
             </head>
-        "##, 
-            fonts_position = self.placements.fonts_position,
-            head_top_position = self.placements.head_top_position,
-            schema_position = self.placements.schema_position,
-            analytics_position = self.placements.analytics_position,
-            head_bottom_position = self.placements.head_bottom_position,
-        )
+        "##)
     }
     
     // The sovereign method - SEO basics + optional custom additions
