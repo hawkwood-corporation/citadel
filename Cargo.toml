@@ -4,8 +4,8 @@ version = "0.1.0"
 edition = "2024"
 description = "Sovereign static site platform built with Rust"
 license = "SEE LICENSE FILE"
-repository = "https://github.com/HawkwoodCorporation/citadel"
-homepage = "https://github.com/HawkwoodCorporation/citadel"
+repository = "https://github.com/hawkwood-corporation/citadel"
+homepage = "https://github.com/hawkwood-corporation/citadel"
 
 [dependencies]
 slugify = "0.1.0"
