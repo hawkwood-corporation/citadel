@@ -29,6 +29,7 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
             },
             settings: Settings {
                 output_folder: PathBuf::from("public"),
+                verbose_assets_copying: false,
             },
             imperium,
             page_constructors: HashMap::new(),
@@ -49,6 +50,7 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
             placements: Placements::new(),
             settings: Settings {
                 output_folder: PathBuf::from("public"),
+                verbose_assets_copying: false,
             },
             imperium,
             page_constructors: HashMap::new(),
@@ -59,4 +61,10 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
 
 pub struct Settings {
     pub output_folder: PathBuf,
+    pub verbose_assets_copying: bool,
+}
+
+/// Convenience function for Default::default()
+pub fn default<T: Default>() -> T {
+    Default::default()
 }

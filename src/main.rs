@@ -81,28 +81,28 @@ fn main() {
         Page {
             foundation: PageFoundation { 
                 title: "Hawkwood Corporation".to_owned(),
-                ..Default::default() 
+                ..default() 
             },
             specification: HawkwoodPages::Homepage,
         },
         Page {
             foundation: PageFoundation { 
                 title: "Market Intelligence".to_owned(),
-                ..Default::default()
+                ..default()
             },
             specification: HawkwoodPages::Intelligence,
         },
         Page {
             foundation: PageFoundation { 
                 title: "About Us".to_owned(),
-                ..Default::default()
+                ..default()
             },
             specification: HawkwoodPages::About,
         },
         Page {
             foundation: PageFoundation { 
                 title: "My First Blog Post".to_owned(),
-                ..Default::default()
+                ..default()
             },
             specification: HawkwoodPages::BlogPost {
                 date: Some("2025-01-15".to_owned()),
@@ -112,7 +112,7 @@ fn main() {
         Page {
             foundation: PageFoundation { 
                 title: "Another Blog Post".to_owned(),
-                ..Default::default()
+                ..default()
             },
             specification: HawkwoodPages::BlogPost {
                 date: Some("2025-01-20".to_owned()),

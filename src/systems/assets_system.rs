@@ -3,49 +3,72 @@ use crate::prelude::*;
 use std::{fs, path::PathBuf};
 
 impl<T, I> Site<T, I> {
-    
     pub fn copy_assets(&self) {
+        let verbose = self.settings.verbose_assets_copying;
         let assets_path = PathBuf::from("./assets");
         
-        // Check if assets folder exists
         if !assets_path.exists() {
-            println!("No assets folder found, skipping asset copying");
+            if verbose {
+                println!("No assets folder found, skipping asset copying");
+            }
             return;
         }
         
         let mut output_path = PathBuf::from(".");
         output_path.push(&self.settings.output_folder);
         
-        println!("Copying assets from {:?} to {:?}", assets_path, output_path);
+        if verbose {
+            println!("Copying assets from {:?} to {:?}", assets_path, output_path);
+        }
         
-        // Copy the contents of assets directory to output root
-        if let Err(e) = copy_dir_contents(&assets_path, &output_path) {
+        if let Err(e) = copy_dir_contents(&assets_path, &output_path, verbose) {
             eprintln!("Failed to copy assets: {}", e);
-        }/* else {
-            println!("Assets copied successfully!");
-        }*/
+        }
     }
 }
 
-fn copy_dir_contents(src: &PathBuf, dst: &PathBuf) -> std::io::Result<()> {
-    // Create destination directory
+fn copy_dir_contents(src: &PathBuf, dst: &PathBuf, verbose: bool) -> std::io::Result<()> {
     fs::create_dir_all(dst)?;
     
-    // Read the source directory and copy its contents
     for entry in fs::read_dir(src)? {
         let entry = entry?;
         let src_path = entry.path();
         let dst_path = dst.join(entry.file_name());
         
         if src_path.is_dir() {
-            // Recursively copy subdirectories
-            copy_dir_recursive(&src_path, &dst_path)?;
+            copy_dir_recursive(&src_path, &dst_path, verbose)?;
         } else {
-            // Copy files only if they don't exist or are newer
             if should_copy_file(&src_path, &dst_path)? {
                 fs::copy(&src_path, &dst_path)?;
-                println!("Copied: {:?} -> {:?}", src_path, dst_path);
-            } else {
+                if verbose {
+                    println!("Copied: {:?} -> {:?}", src_path, dst_path);
+                }
+            } else if verbose {
+                println!("Skipped (up to date): {:?}", src_path);
+            }
+        }
+    }
+    
+    Ok(())
+}
+
+fn copy_dir_recursive(src: &PathBuf, dst: &PathBuf, verbose: bool) -> std::io::Result<()> {
+    fs::create_dir_all(dst)?;
+    
+    for entry in fs::read_dir(src)? {
+        let entry = entry?;
+        let src_path = entry.path();
+        let dst_path = dst.join(entry.file_name());
+        
+        if src_path.is_dir() {
+            copy_dir_recursive(&src_path, &dst_path, verbose)?;
+        } else {
+            if should_copy_file(&src_path, &dst_path)? {
+                fs::copy(&src_path, &dst_path)?;
+                if verbose {
+                    println!("Copied: {:?} -> {:?}", src_path, dst_path);
+                }
+            } else if verbose {
                 println!("Skipped (up to date): {:?}", src_path);
             }
         }
@@ -75,31 +98,4 @@ fn should_copy_file(src: &PathBuf, dst: &PathBuf) -> std::io::Result<bool> {
     
     // Copy if source is newer than destination
     Ok(src_modified > dst_modified)
-}
-
-fn copy_dir_recursive(src: &PathBuf, dst: &PathBuf) -> std::io::Result<()> {
-    // Create destination directory
-    fs::create_dir_all(dst)?;
-    
-    // Read the source directory
-    for entry in fs::read_dir(src)? {
-        let entry = entry?;
-        let src_path = entry.path();
-        let dst_path = dst.join(entry.file_name());
-        
-        if src_path.is_dir() {
-            // Recursively copy subdirectories
-            copy_dir_recursive(&src_path, &dst_path)?;
-        } else {
-            // Copy files only if they don't exist or are newer
-            if should_copy_file(&src_path, &dst_path)? {
-                fs::copy(&src_path, &dst_path)?;
-                println!("Copied: {:?} -> {:?}", src_path, dst_path);
-            } else {
-                println!("Skipped (up to date): {:?}", src_path);
-            }
-        }
-    }
-    
-    Ok(())
 }
