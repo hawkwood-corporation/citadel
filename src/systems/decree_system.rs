@@ -32,5 +32,9 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
                 format_html(content);
             }
         }
+        
+        self.generate_sitemap();
+        self.generate_robots_txt();
+        
     }
 }

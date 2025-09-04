@@ -17,6 +17,7 @@ pub use crate::systems::{
     cleanup_system::*,
     head_system::*,
     placements_system::*,
+    sitemap_system::*,
 };
 
 pub use url::Url;

@@ -21,4 +21,5 @@ mod systems {
     pub mod assets_system;
     pub mod head_system;
     pub mod placements_system;
+    pub mod sitemap_system;
 }
