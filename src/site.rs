@@ -15,11 +15,11 @@ pub struct Site<T, I = ()> {
     pub head_constructor: Option<fn(&mut Site<T, I>, &Page<T>) -> String>,
 }
 
-impl<T: Hash + Eq + Clone, I> Site<T, I> {
-    pub fn example(imperium: I) -> Self {
+impl<T: Hash + Eq + Clone, I: Default> Default for Site<T, I> {
+    fn default() -> Self {
         Self {
-            title: "Hawkwood Corporation".to_owned(),
-            base_url: Url::parse("https://hawkwoodcorporation.com/").expect("Invalid base URL"),
+            title: "Citadel Site".to_owned(),
+            base_url: Url::parse("https://example.com/").expect("Invalid base URL"),
             pages: Vec::new(),
             sections: Sections::new(),
             css: HashMap::new(),
@@ -27,41 +27,55 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
             breakpoints: Breakpoints {
                 mobile: "1000px".to_owned(), 
             },
-            settings: Settings {
-                output_folder: PathBuf::from("public"),
-                verbose_assets_copying: false,
-            },
-            imperium,
-            page_constructors: HashMap::new(),
-            head_constructor: None,
-        }
-    }
-    
-    pub fn new(title: String, base_url: Url, imperium: I) -> Self {
-        Self {
-            title,
-            base_url,
-            pages: Vec::new(),
-            sections: Sections::new(),
-            css: HashMap::new(),
-            breakpoints: Breakpoints {
-                mobile: "1000px".to_owned(), 
-            },
-            placements: Placements::new(),
-            settings: Settings {
-                output_folder: PathBuf::from("public"),
-                verbose_assets_copying: false,
-            },
-            imperium,
+            settings: Settings::default(),
+            imperium: I::default(),
             page_constructors: HashMap::new(),
             head_constructor: None,
         }
     }
 }
 
+impl<T: Hash + Eq + Clone, I> Site<T, I> {
+    pub fn example(imperium: I) -> Self 
+    where 
+        I: Default 
+    {
+        Self {
+            title: "Hawkwood Corporation".to_owned(),
+            base_url: Url::parse("https://hawkwoodcorporation.com/").expect("Invalid base URL"),
+            imperium,
+            ..Self::default()
+        }
+    }
+    
+    pub fn new(title: String, base_url: Url, imperium: I) -> Self 
+    where 
+        I: Default 
+    {
+        Self {
+            title,
+            base_url,
+            imperium,
+            ..Self::default()
+        }
+    }
+}
+
+
 pub struct Settings {
     pub output_folder: PathBuf,
     pub verbose_assets_copying: bool,
+    pub title_append: Option<String>,
+}
+
+impl Default for Settings {
+    fn default() -> Self {
+        Self {
+            output_folder: PathBuf::from("public"),
+            verbose_assets_copying: false,
+            title_append: Some(" - {site_title}".to_owned()),
+        }
+    }
 }
 
 /// Convenience function for Default::default()
