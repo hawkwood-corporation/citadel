@@ -21,11 +21,20 @@ fn construct_homepage(site: &mut Site<HawkwoodPages, ()>, page: &mut Page<Hawkwo
         <!DOCTYPE html>
         <html lang="en-US">
         {head}
-        <body>
+        <body class="homepage">
             <h1>Hawkwood Corporation</h1>
             <p>Strategic revenue engineering test page.</p>
         </body>
         </html>
+    "##);
+    
+    site.declare_placement(PlacementPosition::BodyTop, r##"
+    
+    <!-- Google Analytics Body Top Position --> 
+    <script>
+           
+    </script>
+    
     "##);
     
     page.foundation.content = Some(html);

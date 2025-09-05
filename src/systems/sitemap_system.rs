@@ -3,7 +3,12 @@ use std::fs;
 
 impl<T, I> Site<T, I> {
     /// Generate and write sitemap.xml - sovereign and simple
+    /// Generate and write sitemap.xml - sovereign and simple
     pub fn generate_sitemap(&self) {
+        // Ensure output directory exists
+        fs::create_dir_all(&self.settings.output_folder)
+            .expect("Failed to create output directory for sitemap");
+            
         let mut sitemap = String::from(r#"<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">"#);
         
@@ -38,6 +43,10 @@ impl<T, I> Site<T, I> {
     
     /// Generate robots.txt with sitemap reference
     pub fn generate_robots_txt(&self) {
+        // Ensure output directory exists
+        fs::create_dir_all(&self.settings.output_folder)
+            .expect("Failed to create output directory for robots.txt");
+            
         let sitemap_url = self.base_url.join("sitemap.xml").unwrap();
         
         let robots = format!(r#"User-agent: *
