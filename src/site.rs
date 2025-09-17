@@ -73,7 +73,8 @@ impl Default for Settings {
         Self {
             output_folder: PathBuf::from("public"),
             verbose_assets_copying: false,
-            title_append: Some(" - {site_title}".to_owned()),
+            //title_append: Some(" - {site_title}".to_owned()),
+            title_append: None,
         }
     }
 }
