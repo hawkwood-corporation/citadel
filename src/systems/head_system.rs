@@ -15,7 +15,22 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
     }
     
     pub fn construct_citadel_head(&mut self, page: &Page<T>) -> String {
-        let title = &page.foundation.title;
+        let mut title = page.foundation.title.clone();
+        
+        // Apply title append if configured (but skip for homepage)
+        if let Some(append_pattern) = &self.settings.title_append {
+            let is_homepage = page.foundation.slug.as_deref().unwrap_or("/") == "/" 
+                || page.foundation.slug.as_deref().unwrap_or("") == ""
+                || page.foundation.title.to_lowercase() == "homepage"
+                || page.foundation.title.to_lowercase() == "home"
+                || page.foundation.title == self.title;
+            
+            if !is_homepage {
+                let append = append_pattern.replace("{site_title}", &self.title);
+                title.push_str(&append);
+            }
+        }
+        
         let metadescription = page.foundation.metadescription.as_deref().unwrap_or("");
         
         let (metadescription_tag, og_description, twitter_description) = if metadescription.is_empty() {
