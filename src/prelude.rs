@@ -15,9 +15,10 @@ pub use crate::systems::{
     pages_system::*,
     sections_system::*,
     cleanup_system::*,
-    head_system::*,
+    //head_system::*,
     placements_system::*,
-    sitemap_system::*,
+    //sitemap_system::*,
+    content_system::*,
 };
 
 pub use url::Url;

@@ -5,11 +5,11 @@ enum HawkwoodPages {
     Homepage,
     Intelligence, 
     About,
-    BlogPost {
-        date: Option<String>,
-        author: Option<String>,
-    },
+    BlogPost(PostData<BlogFrontmatter>),
 }
+
+
+
 
 // Simple test constructors
 fn construct_homepage(site: &mut Site<HawkwoodPages, ()>, page: &mut Page<HawkwoodPages>) {
@@ -72,21 +72,17 @@ fn construct_blog_post(site: &mut Site<HawkwoodPages, ()>, page: &mut Page<Hawkw
         }
     
     "##);
-    // Access the blog post data from the specification
-    if let HawkwoodPages::BlogPost { date, author } = &page.specification {
-        let date_str = date.as_deref().unwrap_or("Unknown date");
-        let author_str = author.as_deref().unwrap_or("Unknown author");
-        
+   
         page.foundation.content = Some(format!(
-            "<h1>{}</h1><p>By {} on {}</p><p>Blog post content coming soon...</p>", 
-            page.foundation.title, author_str, date_str
+            "<h1>{}</h1><p>Blog post content coming soon...</p>", 
+            page.foundation.title
         ));
-    }
+    
 }
 
 
 fn main() {
-    let pages = vec![
+    let mut pages = vec![
         Page {
             foundation: PageFoundation { 
                 title: "Hawkwood Corporation".to_owned(),
@@ -107,28 +103,20 @@ fn main() {
                 ..default()
             },
             specification: HawkwoodPages::About,
-        },
-        Page {
-            foundation: PageFoundation { 
-                title: "My First Blog Post".to_owned(),
-                ..default()
-            },
-            specification: HawkwoodPages::BlogPost {
-                date: Some("2025-01-15".to_owned()),
-                author: Some("Jake".to_owned()),
-            },
-        },
-        Page {
-            foundation: PageFoundation { 
-                title: "Another Blog Post".to_owned(),
-                ..default()
-            },
-            specification: HawkwoodPages::BlogPost {
-                date: Some("2025-01-20".to_owned()),
-                author: Some("Claude".to_owned()),
-            },
-        },
-    ];
+        }];
+        
+        for post in get_all_blog_posts() {  
+            println!("Loaded blog post: {} at blog/{}", post.frontmatter.title, post.slug);
+            pages.push(Page {
+                foundation: PageFoundation {
+                    title: post.frontmatter.title.clone(),
+                    slug: Some(format!("{}", post.slug)),
+                    metadescription: Some(post.frontmatter.description.clone()),
+                    ..default()
+                },
+                specification: HawkwoodPages::BlogPost(post),
+            });
+        };
     
     use HawkwoodPages::*;
         
@@ -136,7 +124,7 @@ fn main() {
         .add_constructor(Homepage, construct_homepage)
         .add_constructor(Intelligence, construct_intelligence)
         .add_constructor(About, construct_about)
-        .add_constructor(BlogPost { date: None, author: None }, construct_blog_post)
+        .add_constructor(BlogPost(default()), construct_blog_post)
         .add_head_constructor()
         //.add_head_constructor_with(custom_code)
         .add_pages(pages)
@@ -148,13 +136,12 @@ fn main() {
 
 
 
-
-
 // -- Example: Manual trait-based constructor routing --
 // This shows how to bypass Citadel's HashMap registration system
 // and implement your own constructor dispatch if needed.
 // Most users should prefer the .add_constructor() approach above.
 
+/*
 trait PageConstructor<T, I> {
     fn construct_matcher(&self, site: &mut Site<T, I>, page: &mut Page<T>);
 }
@@ -171,4 +158,6 @@ impl PageConstructor<HawkwoodPages, ()> for HawkwoodPages {
         }
     }
 }
+
+*/
 // -- End example --
