@@ -110,7 +110,7 @@ fn main() {
             pages.push(Page {
                 foundation: PageFoundation {
                     title: post.frontmatter.title.clone(),
-                    slug: Some(format!("{}", post.slug)),
+                    slug: Some(post.slug.clone()),
                     metadescription: Some(post.frontmatter.description.clone()),
                     ..default()
                 },
