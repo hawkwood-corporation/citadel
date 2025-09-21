@@ -13,6 +13,7 @@ pub struct Site<T, I = ()> {
     pub imperium: I,
     pub page_constructors: HashMap<T, fn(&mut Site<T, I>, &mut Page<T>)>,
     pub head_constructor: Option<fn(&mut Site<T, I>, &Page<T>) -> String>,
+    pub decrees: Vec<(String, String)>,
 }
 
 impl<T: Hash + Eq + Clone, I: Default> Default for Site<T, I> {
@@ -31,6 +32,7 @@ impl<T: Hash + Eq + Clone, I: Default> Default for Site<T, I> {
             imperium: I::default(),
             page_constructors: HashMap::new(),
             head_constructor: None,
+            decrees: Vec::new(),
         }
     }
 }

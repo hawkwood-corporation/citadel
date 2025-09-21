@@ -8,14 +8,24 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
         self.write_files();
         self.copy_assets();
     }
+    
+    pub fn declare_decree(&mut self, from: &str, to: &str) -> &mut Self {
+        self.decrees.push((from.to_owned(), to.to_owned()));
+        self
+    }
 
     pub fn decree_across_pages(&mut self) {
         let final_css = self.construct_css();
         
+        self.decrees.push(("[CSS_POSITION]".to_owned(), final_css));
+        
         for page in &mut self.pages {
             if let Some(content) = &mut page.foundation.content {
-                // Replace CSS
-                *content = content.replace("[CSS_POSITION]", &final_css);
+                
+                // Apply all decrees
+                for (from, to) in &self.decrees {
+                    *content = content.replace(from, to);
+                }
                 
                 // Simple body injection
                 if let Some(body_start) = content.find("<body") {
