@@ -1,5 +1,13 @@
 use crate::prelude::*;
 
+impl<T, I> Site<T, I> {
+    pub fn declare_decree(&mut self, from: &str, to: &str) -> &mut Self {
+        self.decrees.push((from.to_owned(), to.to_owned()));
+        self
+    }
+}
+
+
 impl<T: Hash + Eq + Clone, I> Site<T, I> {
     pub fn commence(&mut self) {
         self.construct_sections();
@@ -9,11 +17,6 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
         self.copy_assets();
     }
     
-    pub fn declare_decree(&mut self, from: &str, to: &str) -> &mut Self {
-        self.decrees.push((from.to_owned(), to.to_owned()));
-        self
-    }
-
     pub fn decree_across_pages(&mut self) {
         let final_css = self.construct_css();
         
