@@ -64,7 +64,7 @@ fn scan_directory<F>(
 }
 
 /// Simple markdown to HTML renderer
-fn render_markdown(markdown: &str) -> String {
+pub fn render_markdown(markdown: &str) -> String {
     #[cfg(feature = "markdown")]
     {
         use pulldown_cmark::{Parser, Options, html};
