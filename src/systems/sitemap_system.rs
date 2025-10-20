@@ -13,11 +13,16 @@ impl<T, I> Site<T, I> {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">"#);
         
         for page in &self.pages {
-            // Construct the full URL
+            // Construct the full URL matching the file structure
             let url = if let Some(slug) = &page.foundation.slug {
                 if slug.is_empty() || slug == "/" {
                     self.base_url.to_string().trim_end_matches('/').to_owned()
+                } else if self.settings.use_trailing_slashes {
+                    // With trailing slashes: /about/ (implied index.html)
+                    let url_with_slash = format!("{}/", slug);
+                    self.base_url.join(&url_with_slash).unwrap().to_string()
                 } else {
+                    // Without trailing slashes: /about (as .html file)
                     self.base_url.join(slug).unwrap().to_string()
                 }
             } else {

@@ -38,11 +38,8 @@ impl<T, I> Site<T, I> {
                 return "index.html".to_owned();
             }
             
-            if self.settings.use_trailing_slashes {
-                format!("{}/index.html", slug)
-            } else {
-                format!("{}.html", slug)
-            }
+            self.set_filename(&slug)
+            
         } else {
             let title_lower = foundation.title.to_lowercase();
             if title_lower == "homepage" || title_lower == "home" || title_lower == "home page" {
@@ -51,11 +48,15 @@ impl<T, I> Site<T, I> {
             
             let slug = foundation.slug.as_ref().unwrap_or(&foundation.title);
             
-            if self.settings.use_trailing_slashes {
-                format!("{}/index.html", slug)
-            } else {
-                format!("{}.html", slug)
-            }
+            self.set_filename(&slug)
+        }
+    }
+    
+    fn set_filename(&self, slug: &str) -> String {
+        if self.settings.use_trailing_slashes {
+            format!("{}/index.html", slug)
+        } else {
+            format!("{}.html", slug)
         }
     }
 }
