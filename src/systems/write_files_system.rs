@@ -13,7 +13,7 @@ impl<T, I> Site<T, I> {
         println!("Pages to generate: {}", &self.pages.len());
         
         for page_item in &self.pages {
-            let filename = get_filename(&page_item.foundation);
+            let filename = self.get_filename(&page_item.foundation);
             let file_path = output_path.join(&filename);
             
             // Create parent directory if it doesn't exist
@@ -31,22 +31,31 @@ impl<T, I> Site<T, I> {
         
         println!("Site generated!");
     }
-}
-
-fn get_filename(foundation: &PageFoundation) -> String {
-    if let Some(slug) = &foundation.slug {
-        if slug == "/" || slug.is_empty() {
-            return "index.html".to_owned();
+    
+    fn get_filename(&self, foundation: &PageFoundation) -> String {
+        if let Some(slug) = &foundation.slug {
+            if slug == "/" || slug.is_empty() {
+                return "index.html".to_owned();
+            }
+            
+            if self.settings.use_trailing_slashes {
+                format!("{}/index.html", slug)
+            } else {
+                format!("{}.html", slug)
+            }
+        } else {
+            let title_lower = foundation.title.to_lowercase();
+            if title_lower == "homepage" || title_lower == "home" || title_lower == "home page" {
+                return "index.html".to_owned();
+            }
+            
+            let slug = foundation.slug.as_ref().unwrap_or(&foundation.title);
+            
+            if self.settings.use_trailing_slashes {
+                format!("{}/index.html", slug)
+            } else {
+                format!("{}.html", slug)
+            }
         }
-        // Create folder structure for clean URLs
-        return format!("{}/index.html", slug);
     }
-    
-    let title_lower = foundation.title.to_lowercase();
-    if title_lower == "homepage" || title_lower == "home" || title_lower == "home page" {
-        return "index.html".to_owned();
-    }
-    
-    let slug = foundation.slug.as_ref().unwrap_or(&foundation.title);
-    format!("{}/index.html", slug)
 }

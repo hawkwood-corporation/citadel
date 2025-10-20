@@ -68,6 +68,7 @@ pub struct Settings {
     pub output_folder: PathBuf,
     pub verbose_assets_copying: bool,
     pub title_append: Option<String>,
+    pub use_trailing_slashes: bool,
 }
 
 impl Default for Settings {
@@ -77,6 +78,7 @@ impl Default for Settings {
             verbose_assets_copying: false,
             //title_append: Some(" - {site_title}".to_owned()),
             title_append: None,
+            use_trailing_slashes: false,
         }
     }
 }
