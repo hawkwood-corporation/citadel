@@ -1,18 +1,18 @@
 use citadel::prelude::*;
 
 #[derive(Hash, Eq, PartialEq, Clone)]
-enum HawkwoodPages {
+enum HawkwoodExamplePages {
     Homepage,
     Intelligence, 
     About,
-    BlogPost(PostData<BlogFrontmatter>),
+    BlogPost(PostData<ExampleBlogFrontmatter>),
 }
 
 
 
 
 // Simple test constructors
-fn construct_homepage(site: &mut Site<HawkwoodPages, ()>, page: &mut Page<HawkwoodPages>) {
+fn construct_homepage(site: &mut Site<HawkwoodExamplePages, ()>, page: &mut Page<HawkwoodExamplePages>) {
     page.foundation.slug = Some("".to_owned());
     
     let head = site.construct_head(page);
@@ -40,7 +40,7 @@ fn construct_homepage(site: &mut Site<HawkwoodPages, ()>, page: &mut Page<Hawkwo
     page.foundation.content = Some(html);
 }
 
-fn construct_intelligence(site: &mut Site<HawkwoodPages, ()>, page: &mut Page<HawkwoodPages>) {
+fn construct_intelligence(site: &mut Site<HawkwoodExamplePages, ()>, page: &mut Page<HawkwoodExamplePages>) {
     site.declare_css("intelligence", r##"
     
         .intelligence {
@@ -52,7 +52,7 @@ fn construct_intelligence(site: &mut Site<HawkwoodPages, ()>, page: &mut Page<Ha
     page.foundation.content = Some("<h1>Market Intelligence Division</h1><p>Test intelligence page.</p>".to_owned());
 }
 
-fn construct_about(site: &mut Site<HawkwoodPages, ()>, page: &mut Page<HawkwoodPages>) {
+fn construct_about(site: &mut Site<HawkwoodExamplePages, ()>, page: &mut Page<HawkwoodExamplePages>) {
     site.declare_css("about", r##"
     
         .about {
@@ -64,7 +64,7 @@ fn construct_about(site: &mut Site<HawkwoodPages, ()>, page: &mut Page<HawkwoodP
     page.foundation.content = Some("<h1>About Hawkwood</h1><p>Test about page.</p>".to_owned());
 }
 
-fn construct_blog_post(site: &mut Site<HawkwoodPages, ()>, page: &mut Page<HawkwoodPages>) {
+fn construct_blog_post(site: &mut Site<HawkwoodExamplePages, ()>, page: &mut Page<HawkwoodExamplePages>) {
     site.declare_css("blog-post", r##"
     
         .blog-post {
@@ -88,24 +88,24 @@ fn main() {
                 title: "Hawkwood Corporation".to_owned(),
                 ..default() 
             },
-            specification: HawkwoodPages::Homepage,
+            specification: HawkwoodExamplePages::Homepage,
         },
         Page {
             foundation: PageFoundation { 
                 title: "Market Intelligence".to_owned(),
                 ..default()
             },
-            specification: HawkwoodPages::Intelligence,
+            specification: HawkwoodExamplePages::Intelligence,
         },
         Page {
             foundation: PageFoundation { 
                 title: "About Us".to_owned(),
                 ..default()
             },
-            specification: HawkwoodPages::About,
+            specification: HawkwoodExamplePages::About,
         }];
         
-        for post in get_all_blog_posts() {  
+        for post in citadel_get_all_posts() {  
             println!("Loaded blog post: {} at blog/{}", post.frontmatter.title, post.slug);
             pages.push(Page {
                 foundation: PageFoundation {
@@ -114,11 +114,11 @@ fn main() {
                     metadescription: Some(post.frontmatter.description.clone()),
                     ..default()
                 },
-                specification: HawkwoodPages::BlogPost(post),
+                specification: HawkwoodExamplePages::BlogPost(post),
             });
         };
     
-    use HawkwoodPages::*;
+    use HawkwoodExamplePages::*;
         
     Site::example(())
         .add_constructor(Homepage, construct_homepage)
@@ -146,10 +146,10 @@ trait PageConstructor<T, I> {
     fn construct_matcher(&self, site: &mut Site<T, I>, page: &mut Page<T>);
 }
 
-use HawkwoodPages::*;
+use HawkwoodExamplePages::*;
 
-impl PageConstructor<HawkwoodPages, ()> for HawkwoodPages {
-    fn construct_matcher(&self, site: &mut Site<HawkwoodPages, ()>, page: &mut Page<HawkwoodPages>) {
+impl PageConstructor<HawkwoodExamplePages, ()> for HawkwoodExamplePages {
+    fn construct_matcher(&self, site: &mut Site<HawkwoodExamplePages, ()>, page: &mut Page<HawkwoodExamplePages>) {
         match self {
             Homepage => construct_homepage(site, page),
             Intelligence => construct_intelligence(site, page),

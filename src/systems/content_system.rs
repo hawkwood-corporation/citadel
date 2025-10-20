@@ -87,7 +87,7 @@ pub fn render_markdown(markdown: &str) -> String {
 
 /// Example blog post frontmatter
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash)]
-pub struct BlogFrontmatter {
+pub struct ExampleBlogFrontmatter {
     pub title: String,
     pub description: String,
     pub author: String,
@@ -95,7 +95,7 @@ pub struct BlogFrontmatter {
 }
 
 /// Example TOML parser for blog posts
-pub fn parse_blog_frontmatter(content: &str) -> Result<(BlogFrontmatter, String), Box<dyn std::error::Error>> {
+pub fn citadel_parse_example_frontmatter(content: &str) -> Result<(ExampleBlogFrontmatter, String), Box<dyn std::error::Error>> {
     if !content.starts_with("+++") {
         return Err("No TOML frontmatter found".into());
     }
@@ -104,7 +104,7 @@ pub fn parse_blog_frontmatter(content: &str) -> Result<(BlogFrontmatter, String)
     let frontmatter_content = &content[3..end_marker + 3];
     let markdown_content = content[end_marker + 6..].trim_start();
     
-    let mut frontmatter = BlogFrontmatter::default();
+    let mut frontmatter = ExampleBlogFrontmatter::default();
     
     for line in frontmatter_content.lines() {
         let line = line.trim();
@@ -130,8 +130,8 @@ pub fn parse_blog_frontmatter(content: &str) -> Result<(BlogFrontmatter, String)
 }
 
 /// Convenience function for loading blog posts specifically
-pub fn get_all_blog_posts() -> Vec<PostData<BlogFrontmatter>> {
-    let mut posts = load_content("content", parse_blog_frontmatter);
+pub fn citadel_get_all_posts() -> Vec<PostData<ExampleBlogFrontmatter>> {
+    let mut posts = load_content("content", citadel_parse_example_frontmatter);
     
     // Sort by date (newest first)
     posts.sort_by(|a, b| {
