@@ -13,11 +13,8 @@ pub use crate::{site::*, systems::*};
 pub use crate::systems::{
     nav_system::*, 
     pages_system::*,
-    sections_system::*,
     cleanup_system::*,
-    //head_system::*,
     placements_system::*,
-    //sitemap_system::*,
     content_system::*,
 };
 

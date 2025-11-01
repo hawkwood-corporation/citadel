@@ -5,7 +5,7 @@ pub struct Site<T, I = ()> {
     pub title: String,
     pub base_url: Url,
     pub pages: Vec<Page<T>>,
-    pub sections: Sections,
+    pub sections: HashMap<String, String>,
     pub css: HashMap<String, String>,
     pub placements: Placements,
     pub breakpoints: Breakpoints,
@@ -22,7 +22,7 @@ impl<T: Hash + Eq + Clone, I: Default> Default for Site<T, I> {
             title: "Citadel Site".to_owned(),
             base_url: Url::parse("https://example.com/").expect("Invalid base URL"),
             pages: Vec::new(),
-            sections: Sections::new(),
+            sections: HashMap::new(),
             css: HashMap::new(),
             placements: Placements::new(),
             breakpoints: Breakpoints {
