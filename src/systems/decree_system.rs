@@ -52,7 +52,9 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
                     }
                 }
                 
-                format_html(content);
+                if self.settings.format_html {
+                    format_html(content);
+                }
             }
         }
         

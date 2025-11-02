@@ -69,6 +69,7 @@ pub struct Settings {
     pub verbose_assets_copying: bool,
     pub title_append: Option<String>,
     pub use_trailing_slashes: bool,
+    pub format_html: bool,
 }
 
 impl Default for Settings {
@@ -79,6 +80,7 @@ impl Default for Settings {
             //title_append: Some(" - {site_title}".to_owned()),
             title_append: None,
             use_trailing_slashes: true,
+            format_html: false,
         }
     }
 }
