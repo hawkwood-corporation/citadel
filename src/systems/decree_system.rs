@@ -28,8 +28,11 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
         for page in &mut self.pages {
             if let Some(content) = &mut page.foundation.content {
                 
+                println!("Decreeing Page: {}", page.foundation.slug.as_ref().unwrap());
+                
                 // Apply all decrees
                 for (from, to) in &self.decrees {
+                    println!("Applying Decree: {} -> {}", from, to);
                     *content = content.replace(from, to);
                 }
                 

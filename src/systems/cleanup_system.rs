@@ -9,12 +9,14 @@ pub fn clean_up_metadata(page: &mut PageFoundation) {
 }
 
 pub fn format_html(content: &mut String) {
+    println!("Formatting HTML");
     let lines: Vec<&str> = content.lines().collect();
     let mut result = String::new();
     let mut indent: usize = 0;
     let mut in_style_tag = false;
     
     for (i, line) in lines.iter().enumerate() {
+        println!("Processing line: {}", i);
         let trimmed = line.trim();
         if trimmed.is_empty() { 
             continue;
