@@ -10,9 +10,13 @@ impl<T, I> Site<T, I> {
 
 impl<T: Hash + Eq + Clone, I> Site<T, I> {
     pub fn commence(&mut self) {
+        println!("Creating Pages");
         self.create_pages();
+        println!("Decreeing Across Pages");
         self.decree_across_pages();
+        println!("Writing Files");
         self.write_files();
+        println!("Copying Assets");
         self.copy_assets();
     }
     
