@@ -66,10 +66,15 @@ pub fn format_html(content: &mut String) {
         result.push('\n');
         
         // Handle opening tags - O(1) lookup now!
-        if let Some(tag_name) = extract_opening_tag(trimmed) {
+        /*if let Some(tag_name) = extract_opening_tag(trimmed) {
             if closing_positions.contains_key(&i) {
                 indent += 1;
             }
+        }*/
+        
+        // Handle opening tags - O(1) lookup now!
+        if extract_opening_tag(trimmed).is_some() && closing_positions.contains_key(&i) {
+            indent += 1;
         }
         
         // CSS blocks
