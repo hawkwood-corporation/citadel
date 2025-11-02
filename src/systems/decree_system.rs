@@ -37,15 +37,19 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
                 }
                 
                 // Simple body injection
-                if let Some(body_start) = content.find("<body") {
-                    if let Some(close_pos) = content[body_start..].find('>') {
-                        let insert_pos = body_start + close_pos + 1;
-                        content.insert_str(insert_pos, &format!("\n{}", &self.placements.body_top_position));
+                if !self.placements.body_top_position.is_empty() {
+                    if let Some(body_start) = content.find("<body") {
+                        if let Some(close_pos) = content[body_start..].find('>') {
+                            let insert_pos = body_start + close_pos + 1;
+                            content.insert_str(insert_pos, &format!("\n{}", &self.placements.body_top_position));
+                        }
                     }
                 }
-                
-                if let Some(body_end) = content.rfind("</body>") {
-                    content.insert_str(body_end, &format!("{}\n", &self.placements.body_bottom_position));
+
+                if !self.placements.body_bottom_position.is_empty() {
+                    if let Some(body_end) = content.rfind("</body>") {
+                        content.insert_str(body_end, &format!("{}\n", &self.placements.body_bottom_position));
+                    }
                 }
                 
                 format_html(content);
