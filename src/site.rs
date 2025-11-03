@@ -79,7 +79,7 @@ impl Default for Settings {
             verbose_assets_copying: false,
             //title_append: Some(" - {site_title}".to_owned()),
             title_append: None,
-            use_trailing_slashes: true,
+            use_trailing_slashes: false,
             format_html: false,
         }
     }
