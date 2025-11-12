@@ -4,8 +4,8 @@ version = "0.1.0"
 edition = "2024"
 description = "Sovereign static site platform built with Rust"
 license = "SEE LICENSE FILE"
-repository = "https://github.com/hawkwood-corporation/citadel"
-homepage = "https://github.com/hawkwood-corporation/citadel"
+repository = "https://github.com/wilderness-interactive/citadel"
+homepage = "https://github.com/wilderness-interactive/citadel"
 
 [dependencies]
 pulldown-cmark = { version = "0.13.0", optional = true }

@@ -1,7 +1,7 @@
 use citadel::prelude::*;
 
 #[derive(Hash, Eq, PartialEq, Clone)]
-enum HawkwoodExamplePages {
+enum WildernessInteractiveExamplePages {
     Homepage,
     Intelligence, 
     About,
@@ -12,7 +12,7 @@ enum HawkwoodExamplePages {
 
 
 // Simple test constructors
-fn construct_homepage(site: &mut Site<HawkwoodExamplePages, ()>, page: &mut Page<HawkwoodExamplePages>) {
+fn construct_homepage(site: &mut Site<WildernessInteractiveExamplePages, ()>, page: &mut Page<WildernessInteractiveExamplePages>) {
     page.foundation.slug = Some("".to_owned());
     
     let head = site.construct_head(page);
@@ -22,7 +22,7 @@ fn construct_homepage(site: &mut Site<HawkwoodExamplePages, ()>, page: &mut Page
         <html lang="en-US">
         {head}
         <body class="homepage">
-            <h1>Hawkwood Corporation</h1>
+            <h1>Wilderness Interactive</h1>
             <p>Strategic revenue engineering test page.</p>
         </body>
         </html>
@@ -40,7 +40,7 @@ fn construct_homepage(site: &mut Site<HawkwoodExamplePages, ()>, page: &mut Page
     page.foundation.content = Some(html);
 }
 
-fn construct_intelligence(site: &mut Site<HawkwoodExamplePages, ()>, page: &mut Page<HawkwoodExamplePages>) {
+fn construct_intelligence(site: &mut Site<WildernessInteractiveExamplePages, ()>, page: &mut Page<WildernessInteractiveExamplePages>) {
     site.declare_css("intelligence", r##"
     
         .intelligence {
@@ -52,7 +52,7 @@ fn construct_intelligence(site: &mut Site<HawkwoodExamplePages, ()>, page: &mut 
     page.foundation.content = Some("<h1>Market Intelligence Division</h1><p>Test intelligence page.</p>".to_owned());
 }
 
-fn construct_about(site: &mut Site<HawkwoodExamplePages, ()>, page: &mut Page<HawkwoodExamplePages>) {
+fn construct_about(site: &mut Site<WildernessInteractiveExamplePages, ()>, page: &mut Page<WildernessInteractiveExamplePages>) {
     site.declare_css("about", r##"
     
         .about {
@@ -61,10 +61,10 @@ fn construct_about(site: &mut Site<HawkwoodExamplePages, ()>, page: &mut Page<Ha
     
     "##);
     page.foundation.slug = Some("about".to_owned());
-    page.foundation.content = Some("<h1>About Hawkwood</h1><p>Test about page.</p>".to_owned());
+    page.foundation.content = Some("<h1>About WildernessInteractive</h1><p>Test about page.</p>".to_owned());
 }
 
-fn construct_blog_post(site: &mut Site<HawkwoodExamplePages, ()>, page: &mut Page<HawkwoodExamplePages>) {
+fn construct_blog_post(site: &mut Site<WildernessInteractiveExamplePages, ()>, page: &mut Page<WildernessInteractiveExamplePages>) {
     site.declare_css("blog-post", r##"
     
         .blog-post {
@@ -85,24 +85,24 @@ fn main() {
     let mut pages = vec![
         Page {
             foundation: PageFoundation { 
-                title: "Hawkwood Corporation".to_owned(),
+                title: "Wilderness Interactive".to_owned(),
                 ..default() 
             },
-            specification: HawkwoodExamplePages::Homepage,
+            specification: WildernessInteractiveExamplePages::Homepage,
         },
         Page {
             foundation: PageFoundation { 
                 title: "Market Intelligence".to_owned(),
                 ..default()
             },
-            specification: HawkwoodExamplePages::Intelligence,
+            specification: WildernessInteractiveExamplePages::Intelligence,
         },
         Page {
             foundation: PageFoundation { 
                 title: "About Us".to_owned(),
                 ..default()
             },
-            specification: HawkwoodExamplePages::About,
+            specification: WildernessInteractiveExamplePages::About,
         }];
         
         for post in citadel_get_all_posts() {  
@@ -114,11 +114,11 @@ fn main() {
                     metadescription: Some(post.frontmatter.description.clone()),
                     ..default()
                 },
-                specification: HawkwoodExamplePages::BlogPost(post),
+                specification: WildernessInteractiveExamplePages::BlogPost(post),
             });
         };
     
-    use HawkwoodExamplePages::*;
+    use WildernessInteractiveExamplePages::*;
         
     Site::example(())
         .add_constructor(Homepage, construct_homepage)
@@ -146,10 +146,10 @@ trait PageConstructor<T, I> {
     fn construct_matcher(&self, site: &mut Site<T, I>, page: &mut Page<T>);
 }
 
-use HawkwoodExamplePages::*;
+use WildernessInteractiveExamplePages::*;
 
-impl PageConstructor<HawkwoodExamplePages, ()> for HawkwoodExamplePages {
-    fn construct_matcher(&self, site: &mut Site<HawkwoodExamplePages, ()>, page: &mut Page<HawkwoodExamplePages>) {
+impl PageConstructor<WildernessInteractiveExamplePages, ()> for WildernessInteractiveExamplePages {
+    fn construct_matcher(&self, site: &mut Site<WildernessInteractiveExamplePages, ()>, page: &mut Page<WildernessInteractiveExamplePages>) {
         match self {
             Homepage => construct_homepage(site, page),
             Intelligence => construct_intelligence(site, page),

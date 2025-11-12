@@ -1,4 +1,4 @@
-// hawkwood-corporation/src/systems/assets_system.rs
+// wilderness-interactive/src/systems/assets_system.rs
 use crate::prelude::*;
 use std::{fs, path::PathBuf};
 

@@ -1,6 +1,6 @@
-Citadel - Hawkwood Corporation's Sovereign Static Site Platform
+Citadel - Wilderness Interactive's Sovereign Static Site Platform
 
-Copyright (C) 2025 Jake Arthur / Hawkwood Corporation
+Copyright (C) 2025 Jake Arthur / Wilderness Interactive
 
 Built with Rust for perfect SEO and limitless control without frameworks.
 
@@ -10,7 +10,7 @@ This program is free software: you can redistribute it and/or modify it under th
 
 Permission is hereby granted, free of charge, to use, copy, modify, and distribute this software for any purpose, including commercial website development.
 
-[license]: https://github.com/hawkwood-corporation/citadel/blob/main/LICENSE
+[license]: https://github.com/wilderness-interactive/citadel/blob/main/LICENSE
 
 Citadel may NOT be:
 

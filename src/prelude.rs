@@ -1,6 +1,6 @@
 /*
- * Citadel - Hawkwood Corporation's Sovereign Static Site Platform
- * Copyright (C) 2025 Jake Arthur / Hawkwood Corporation
+ * Citadel - Wilderness Interactive's Sovereign Static Site Platform
+ * Copyright (C) 2025 Jake Arthur / Wilderness Interactive
  *
  * Built with Rust for perfect SEO and limitless control without frameworks.
  * 

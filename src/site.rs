@@ -43,8 +43,8 @@ impl<T: Hash + Eq + Clone, I> Site<T, I> {
         I: Default 
     {
         Self {
-            title: "Hawkwood Corporation".to_owned(),
-            base_url: Url::parse("https://hawkwoodcorporation.com/").expect("Invalid base URL"),
+            title: "Wilderness Interactive".to_owned(),
+            base_url: Url::parse("https://wildernessinteractive.com/").expect("Invalid base URL"),
             imperium,
             ..Self::default()
         }
