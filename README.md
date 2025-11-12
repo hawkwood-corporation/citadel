@@ -2,7 +2,7 @@ Citadel - Wilderness Interactive's Sovereign Static Site Platform
 
 Copyright (C) 2025 Jake Arthur / Wilderness Interactive
 
-Built with Rust for perfect SEO and limitless control without frameworks.
+Built with Rust for limitless control and zero framework dependencies to achieve perfect SEO.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the The Citadel License. See the [license] for details.
 
